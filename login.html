@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://placehold.co/40x40/8b5cf6/ffffff?text=N">
+
+    <title>Nexus Esports | Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6', // Violet 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300 min-h-screen flex flex-col" 
+      x-data="authPage()" 
+      x-init="initTheme(); initDir();">
+
+    <header class="p-6 flex justify-between items-center w-full max-w-7xl mx-auto">
+        <a href="index.html" class="flex items-center gap-3 group">
+            <div class="bg-primary p-2 rounded-lg shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
+                <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-6 w-6">
+            </div>
+            <span class="text-xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </a>
+
+        <div class="flex items-center gap-3">
+            <button @click="toggleDir()" 
+                    class="text-[10px] font-black px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-all uppercase"
+                    x-text="dir === 'ltr' ? 'LTR' : 'RTL'">
+            </button>
+            <button @click="toggleDark()" 
+                    class="p-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:shadow-md transition-all">
+                <i x-show="!darkMode" class="fa-solid fa-moon text-slate-600"></i>
+                <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-2xl shadow-slate-200/50 dark:shadow-black/50">
+            
+            <div class="text-center mb-10">
+                <h1 class="text-3xl font-black uppercase italic tracking-tight">Welcome <span class="text-primary">Back</span></h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Enter your credentials to access the arena.</p>
+            </div>
+
+            <form action="#" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Email Address</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" placeholder="proplayer@nexus.com" 
+                               class="w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Password</label>
+                    <div class="relative" x-data="{ show: false }">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input :type="show ? 'text' : 'password'" placeholder="••••••••" 
+                               class="w-full pl-11 pr-12 py-3.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                        <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-primary transition-colors">
+                            <i class="fa-solid" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-4 text-sm font-bold">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer">
+                        <span class="text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200">Remember me</span>
+                    </label>
+                    <a href="#" class="text-primary hover:underline">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest rounded-xl shadow-lg shadow-primary/30 transform active:scale-[0.98] transition-all">
+                    Login to Nexus
+                </button>
+            </form>
+
+            <div class="mt-10">
+                <div class="relative mb-8">
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200 dark:border-slate-800"></div></div>
+                    <div class="relative flex justify-center text-xs uppercase font-black tracking-widest"><span class="bg-white dark:bg-slate-900 px-4 text-slate-400">Or continue with</span></div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <button class="flex items-center justify-center py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 shadow-sm">
+                        <i class="fa-brands fa-google text-lg"></i>
+                    </button>
+                    <button class="flex items-center justify-center py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 shadow-sm">
+                        <i class="fa-brands fa-apple text-xl"></i>
+                    </button>
+                    <button class="flex items-center justify-center py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 shadow-sm">
+                        <i class="fa-brands fa-facebook-f text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <p class="mt-10 text-center text-sm text-slate-500 dark:text-slate-400">
+                Don't have an account? <a href="regesiter.html" class="text-primary font-bold hover:underline">Join the Squad</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        function authPage() {
+            return {
+                darkMode: false,
+                dir: 'ltr',
+
+                initTheme() {
+                    if (localStorage.getItem('dark-mode') === 'true' || 
+                       (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        this.darkMode = true;
+                        document.documentElement.classList.add('dark');
+                    }
+                },
+
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('dark-mode', this.darkMode);
+                    this.darkMode ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark');
+                },
+
+                initDir() {
+                    this.dir = localStorage.getItem('site-dir') || 'ltr';
+                    document.getElementById('html-tag').dir = this.dir;
+                },
+
+                toggleDir() {
+                    this.dir = this.dir === 'ltr' ? 'rtl' : 'ltr';
+                    localStorage.setItem('site-dir', this.dir);
+                    document.getElementById('html-tag').dir = this.dir;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

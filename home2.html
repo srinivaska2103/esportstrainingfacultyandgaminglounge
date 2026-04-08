@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://placehold.co/40x40/8b5cf6/ffffff?text=N">
+
+    <title>Nexus Esports | Train Like a Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        .hero-video-overlay {
+            background: linear-gradient(0deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 100%);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6', // Violet 500
+                        secondary: '#10b981', // Emerald 500
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300" 
+      x-data="appState()" 
+      x-init="initTheme(); initDir();">
+
+    <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+        <a href="index.html">
+            <div class="flex-shrink-0 flex items-center gap-2 lg:gap-3">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
+            <span class="text-xl lg:text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </div>
+        </a>
+        
+
+       <div class="hidden lg:flex items-center space-x-4 xl:space-x-6" 
+     x-data="{ 
+        active(path) { 
+            const current = window.location.pathname;
+            // Matches if current path ends with the href or is the root
+            return current.endsWith(path) || (path === 'index.html' && (current === '/' || current === ''));
+        } 
+     }">
+    
+    <a href="index.html" 
+       :class="active('index.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Home
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('index.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="home2.html" 
+       :class="active('home2.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Home 2
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('home2.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="about.html" 
+       :class="active('about.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        About
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('about.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="service.html" 
+       :class="active('service.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Service
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('service.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="contact.html" 
+       :class="active('contact.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Contact
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('contact.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <div class="relative" x-data="{ open: false }">
+        <button @click="open = !open" 
+                :class="active('user.html') ? 'text-primary' : ''"
+                class="flex items-center gap-1 hover:text-primary font-medium text-sm xl:text-base focus:outline-none">
+            Dashboard <i class="fa-solid fa-chevron-down text-[10px] transition-transform" :class="open ? 'rotate-180' : ''"></i>
+        </button>
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-100"
+             x-transition:enter-start="transform opacity-0 scale-95"
+             x-transition:enter-end="transform opacity-100 scale-100"
+             @click.away="open = false" 
+             x-cloak 
+             class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-[60]">
+            <a href="user.html" 
+               :class="active('user.html') ? 'bg-slate-100 dark:bg-slate-700 text-primary' : ''"
+               class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+        </div>
+    </div>
+</div>
+
+        <div class="hidden lg:flex items-center space-x-3 xl:space-x-4 border-l border-slate-200 dark:border-slate-700 pl-4 xl:pl-6">
+            <div class="flex items-center gap-1">
+                <button @click="toggleDark()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i x-show="!darkMode" class="fa-solid fa-moon"></i>
+                    <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+                </button>
+                <button @click="toggleDir()" class="text-[10px] font-black px-1.5 py-0.5 border border-slate-400 rounded hover:bg-slate-100 dark:hover:bg-slate-800 uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
+            </div>
+            
+            <a href="login.html" class="text-primary hover:text-white hover:bg-primary border border-primary px-4 py-1.5 rounded-full text-sm font-bold transition-all transform hover:scale-105">Login</a>
+            <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105">Book Now</a>
+        </div>
+
+        <div class="lg:hidden flex items-center gap-4">
+            <button @click="mobileMenu = !mobileMenu" class="text-2xl focus:outline-none p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                <i class="fa-solid" :class="mobileMenu ? 'fa-xmark' : 'fa-bars'"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <div x-show="mobileMenu" 
+     x-cloak 
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0 -translate-y-4"
+     x-transition:enter-end="opacity-100 translate-y-0"
+     x-data="{ 
+        active(path) { 
+            const current = window.location.pathname;
+            return current.endsWith(path) || (path === 'index.html' && (current === '/' || current === ''));
+        } 
+     }"
+     class="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-6 space-y-4 shadow-xl">
+    
+    <a href="index.html" 
+       :class="active('index.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Home</a>
+    
+    <a href="home2.html" 
+       :class="active('home2.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Home 2</a>
+    
+    <a href="about.html" 
+       :class="active('about.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">About</a>
+    
+    <a href="service.html" 
+       :class="active('service.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Service</a>
+    
+    <a href="contact.html" 
+       :class="active('contact.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Contact</a>
+    
+    <div x-data="{ open: false }">
+        <button @click="open = !open" 
+                :class="active('user.html') ? 'text-primary' : 'text-slate-600 dark:text-slate-300'"
+                class="flex justify-between items-center w-full text-lg font-bold py-2">
+            User Dashboards <i class="fa-solid fa-chevron-down text-sm transition-transform" :class="open ? 'rotate-180' : ''"></i>
+        </button>
+        <div x-show="open" x-cloak class="pl-4 mt-2 space-y-3 border-l border-slate-200 dark:border-slate-800">
+            <a href="user.html" 
+               :class="active('user.html') ? 'text-primary font-bold' : 'text-slate-500'"
+               class="block text-base">Profile</a>
+        </div>
+    </div>
+
+    <hr class="border-slate-200 dark:border-slate-800 my-4">
+    
+    <div class="flex items-center justify-between py-2">
+        <span class="text-sm font-bold uppercase tracking-wider text-slate-400">Settings</span>
+        <div class="flex gap-3">
+            <button @click="toggleDark()" class="w-12 h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl transition-colors">
+                <i x-show="!darkMode" class="fa-solid fa-moon"></i>
+                <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+            </button>
+            <button @click="toggleDir()" class="px-4 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl font-black text-xs uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 pt-2">
+        <a href="login.html" 
+           class="block w-full text-center border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-white transition-all">
+           Login
+        </a>
+        <a href="booknow.html" 
+           class="block w-full text-center bg-primary text-white py-4 rounded-xl font-black shadow-lg shadow-primary/30 active:scale-95 transition-all">
+           BOOK NOW
+        </a>
+    </div>
+</div>
+    </nav>
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-slate-900 dark:bg-black transition-colors duration-300">
+    
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-40">
+        <div class="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-primary rounded-full blur-[150px] animate-pulse"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-800 rounded-full blur-[150px] animate-pulse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <div class="text-center lg:text-left">
+                
+
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase bold tracking-tighter leading-[0.85] mb-8">
+                    Turn Passion <br> Into <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-violet-400 ">Competitive Power</span>
+                </h1>
+
+                <p class="max-w-xl mx-auto lg:mx-0 text-lg md:text-xl text-slate-300 mb-10 leading-relaxed font-medium">
+                    Train with the elite, compete in weekly brackets, and experience the raw speed of pro-grade fiber setups.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 md:gap-6">
+                    <a href="booknow.html" class="group relative w-full sm:w-auto px-10 py-5 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest rounded-2xl transition-all transform hover:scale-105 active:scale-95 shadow-2xl shadow-primary/40 flex items-center justify-center gap-3">
+                         Start Training Today <i class="fa-solid fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="comingsoon.html" class="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-white/20 hover:border-white text-white font-black uppercase italic tracking-widest rounded-2xl transition-all hover:bg-white/10 flex items-center justify-center gap-3">
+                         Join a Tournament
+                    </a>
+                </div>
+
+                <div class="mt-12 flex flex-wrap justify-center lg:justify-start gap-8 opacity-60">
+                    <div class="text-center lg:text-left">
+                        <div class="text-2xl font-black text-white italic">240Hz</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ultra Smooth</div>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <div class="text-2xl font-black text-white italic">0.5ms</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Zero Latency</div>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <div class="text-2xl font-black text-white italic">$5K+</div>
+                        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Weekly Pools</div>
+                    </div>
+                </div>
+            </div>
+
+           <div class="relative lg:block">
+    <div class="relative z-10 rounded-[2.5rem] overflow-hidden border border-white/10 dark:border-slate-800 shadow-2xl shadow-primary/20 aspect-video lg:aspect-square group bg-slate-900 transition-all duration-500 hover:border-primary">
+        
+        <img 
+            src="assets/herohome2" 
+            class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110" 
+            alt="Nexus Arena High-Performance PC Zone"
+        >
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+        <div class="absolute top-6 right-6 p-4 bg-slate-900/80 backdrop-blur-md rounded-2xl border border-white/10 hidden md:block">
+            <div class="text-[10px] font-black text-primary uppercase mb-1 tracking-widest">Live Feed</div>
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse shadow-[0_0_8px_#dc2626]"></span>
+                <span class="text-[10px] font-bold text-white uppercase tracking-widest">Arena-01 Online</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="absolute -top-6 -right-6 w-32 h-32 border-t-2 border-r-2 border-primary rounded-tr-[3rem] opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+    <div class="absolute -bottom-6 -left-6 w-32 h-32 border-b-2 border-l-2 border-primary rounded-bl-[3rem] opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+</div>
+
+<style>
+    /* Global Typography Reset: Bold & No Italics */
+    * {
+        font-style: normal !important;
+    }
+</style>
+
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                The <span class="text-primary ">Nexus Advantage</span>
+            </h2>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                We provide the hardware, the training, and the community and You provide the skill.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="group relative p-8 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white group-hover:rotate-[360deg] transition-all duration-700">
+                    <i class="fa-solid fa-rocket text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase italic dark:text-white mb-3">Pro-Level Setup</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    RTX 4080s, 240Hz Zowie monitors, and 0.5ms fiber latency. The same gear the pros use and We ready for you.
+                </p>
+                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fa-solid fa-microchip text-primary/20 text-4xl"></i>
+                </div>
+            </div>
+
+            <div class="group relative p-8 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white group-hover:rotate-[360deg] transition-all duration-700">
+                    <i class="fa-solid fa-bullseye text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase italic dark:text-white mb-3">Expert Coaching</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    1-on-1 VOD reviews and live mechanics training with certified coaches to help you climb the ranks faster.
+                </p>
+                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fa-solid fa-graduation-cap text-primary/20 text-4xl"></i>
+                </div>
+            </div>
+
+            <div class="group relative p-8 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white group-hover:rotate-[360deg] transition-all duration-700">
+                    <i class="fa-solid fa-trophy text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase italic dark:text-white mb-3">Tournaments</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Weekly brackets with real cash prizes. Experience the adrenaline of live LAN competition in our arena.
+                </p>
+                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fa-solid fa-medal text-primary/20 text-4xl"></i>
+                </div>
+            </div>
+
+            <div class="group relative p-8 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary hover:shadow-2xl hover:shadow-primary/10 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-white group-hover:rotate-[360deg] transition-all duration-700">
+                    <i class="fa-solid fa-users text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-black uppercase italic dark:text-white mb-3">Strong Community</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    Find your duo or fill your squad. Join a massive network of local players who share your passion.
+                </p>
+                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <i class="fa-solid fa-comments text-primary/20 text-4xl"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-slate-900 dark:bg-black transition-colors duration-300 relative overflow-hidden" 
+         x-data="counterSection()" 
+         x-intersect.once="startCounters()">
+    
+    <div class="absolute inset-0 z-0 opacity-20">
+        <div class="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent animate-pulse"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-xs font-black uppercase tracking-[0.5em] text-primary mb-4">Live Statistics</h2>
+            <p class="text-3xl md:text-4xl font-black text-white uppercase italic tracking-tighter">
+                The Arena by <span class="text-primary ">Numbers</span>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center">
+            
+            <div class="group p-6 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10 hover:border-primary/50">
+                <div class="text-4xl md:text-6xl font-black italic text-white mb-2 tracking-tighter">
+                    <span x-text="counts.gamers">0</span><span class="text-primary">+</span>
+                </div>
+                <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-white transition-colors">
+                    Active Gamers
+                </div>
+                <div class="mt-4 w-8 h-1 bg-primary/20 mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
+            </div>
+
+            <div class="group p-6 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10 hover:border-primary/50">
+                <div class="text-4xl md:text-6xl font-black italic text-white mb-2 tracking-tighter">
+                    <span x-text="counts.tournaments">0</span><span class="text-primary">+</span>
+                </div>
+                <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-white transition-colors">
+                    Tournaments Hosted
+                </div>
+                <div class="mt-4 w-8 h-1 bg-primary/20 mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
+            </div>
+
+            <div class="group p-6 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10 hover:border-primary/50">
+                <div class="text-4xl md:text-6xl font-black italic text-white mb-2 tracking-tighter">
+                    <span x-text="counts.ranked">0</span><span class="text-primary">+</span>
+                </div>
+                <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-white transition-colors">
+                    Top 10 Players Trained
+                </div>
+                <div class="mt-4 w-8 h-1 bg-primary/20 mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
+            </div>
+
+            <div class="group p-6 rounded-3xl border border-white/5 bg-white/5 backdrop-blur-sm transition-all hover:bg-white/10 hover:border-primary/50">
+                <div class="text-4xl md:text-6xl font-black italic text-white mb-2 tracking-tighter">
+                    <span x-text="counts.hours">0</span><span class="text-primary">K+</span>
+                </div>
+                <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-white transition-colors">
+                    Gaming Hours Logged
+                </div>
+                <div class="mt-4 w-8 h-1 bg-primary/20 mx-auto rounded-full group-hover:w-16 transition-all duration-500"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    function counterSection() {
+        return {
+            counts: {
+                gamers: 500,
+                tournaments: 100,
+                ranked: 100,
+                hours:1000
+            },
+            startCounters() {
+                this.animateValue('gamers', 500, 2000);
+                this.animateValue('tournaments', 100, 2000);
+                this.animateValue('ranked', 10, 2000);
+                this.animateValue('hours', 10, 2000); // 10K+
+            },
+            animateValue(key, target, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    this.counts[key] = Math.floor(progress * target);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+        }
+    }
+</script>
+<section class="py-24 bg-white dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+                Training <span class="text-primary ">Evolved</span>
+            </h2>
+            <p class="mt-4 text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto">
+                Select your path to the podium with our specialized curriculum designed for every skill level.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10 transform hover:-translate-y-2">
+                <div class="h-64 overflow-hidden relative">
+                    <img src="assets/Beginner Gaming" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Beginner Gaming">
+                    <div class="absolute top-4 left-4 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                        Level 01
+                    </div>
+                </div>
+                <div class="p-8">
+                    <div class="mb-4 w-12 h-1 bg-emerald-500 rounded-full"></div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight mb-3">Beginner</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
+                        Master the fundamentals. Learn optimal settings, raw aim drills, and basic map awareness to build a solid competitive foundation.
+                    </p>
+                    <a href="pricing.html" class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-emerald-500 hover:gap-4 transition-all">
+                        Learn Basics <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transform hover:-translate-y-2">
+                <div class="h-64 overflow-hidden relative">
+                    <img src="assets/intermediate" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Intermediate Gaming">
+                    <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                        Level 02
+                    </div>
+                </div>
+                <div class="p-8">
+                    <div class="mb-4 w-12 h-1 bg-primary rounded-full"></div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight mb-3">Intermediate</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
+                        Improve your skills. Refine macro-strategy, complex utility usage, and advanced team communications for higher-tier play.
+                    </p>
+                    <a href="pricing.html" class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary hover:gap-4 transition-all">
+                        Improve Skills <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+          <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2.5rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-red-600/50 hover:shadow-2xl hover:shadow-red-600/10 transform hover:-translate-y-2 
+            /* Grid and Shape Logic */
+            md:col-span-2 lg:col-span-1 
+            flex flex-col md:flex-row lg:flex-col">
+    
+    <div class="h-64 md:h-auto md:w-2/5 lg:w-full lg:h-64 overflow-hidden relative shrink-0">
+        <img src="assets/pro" 
+             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Pro Gaming">
+        
+        <div class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+            Level 03
+        </div>
+    </div>
+
+    <div class="p-8 flex flex-col justify-center">
+        <div class="mb-4 w-12 h-1 bg-red-600 rounded-full"></div>
+        
+        <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic tracking-tight mb-3">
+            Pro
+        </h3>
+        
+        <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
+            Competitive Mastery. Engage in high-stakes VOD analysis, pro-circuit preparation, and psychological performance coaching.
+        </p>
+        
+        <a href="pricing.html" class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-red-600 hover:gap-4 transition-all">
+            Tournament Ready <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+        </div>
+
+        <div class="mt-20 text-center">
+            <a href="comingsoon.html" class="inline-flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-10 py-5 rounded-full font-black uppercase italic tracking-widest transition-all transform hover:scale-105 active:scale-95 shadow-xl">
+                Explore All Programs <i class="fa-solid fa-graduation-cap"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row items-end justify-between gap-6 mb-16">
+            <div class="max-w-xl text-center md:text-left">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+                    Meet Your <span class="text-primary ">Mentors</span>
+                </h2>
+                <p class="mt-4 text-slate-500 dark:text-slate-400 font-medium">
+                    Learn from world-class talent and former pro circuit competitors.
+                </p>
+            </div>
+            <a href="#" class="hidden md:flex items-center gap-3 px-8 py-4 bg-primary text-white font-black uppercase italic text-xs tracking-widest rounded-2xl shadow-lg shadow-primary/30 hover:bg-violet-600 transition-all active:scale-95">
+                Train with Experts <i class="fa-solid fa-bolt"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="h-80 overflow-hidden relative">
+                    <img src="assets/m1" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" alt="Coach Apex">
+                    <div class="absolute top-4 right-4 px-3 py-1 bg-slate-950/80 backdrop-blur-md rounded-full border border-primary/40">
+                        <span class="text-[10px] font-black text-primary uppercase tracking-widest italic">Radiant #14</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">FPS Specialist</span>
+                        <div class="h-[1px] flex-grow bg-slate-200 dark:bg-slate-800"></div>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic mb-1">Coach Apex</h3>
+                    <p class="text-xs font-bold text-primary mb-4 uppercase tracking-tighter">Valorant / CS2</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-trophy text-amber-500"></i> VCT Challengers Finalist</div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-clock"></i> 12,000+ Hours</div>
+                    </div>
+                    <div class="flex gap-4 opacity-40 group-hover:opacity-100 transition-opacity">
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-twitch"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="h-80 overflow-hidden relative">
+                    <img src="assets/m2" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" alt="Coach Luna">
+                    <div class="absolute top-4 right-4 px-3 py-1 bg-slate-950/80 backdrop-blur-md rounded-full border border-primary/40">
+                        <span class="text-[10px] font-black text-primary uppercase tracking-widest italic">Challenger</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">MOBA Lead</span>
+                        <div class="h-[1px] flex-grow bg-slate-200 dark:bg-slate-800"></div>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic mb-1">Coach Luna</h3>
+                    <p class="text-xs font-bold text-primary mb-4 uppercase tracking-tighter">League of Legends</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-trophy text-amber-500"></i> 2x LCS Academy MVP</div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-clock"></i> 8,500+ Hours</div>
+                    </div>
+                    <div class="flex gap-4 opacity-40 group-hover:opacity-100 transition-opacity">
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-twitch"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="h-80 overflow-hidden relative">
+                    <img src="assets/m3" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" alt="Coach Drake">
+                    <div class="absolute top-4 right-4 px-3 py-1 bg-slate-950/80 backdrop-blur-md rounded-full border border-primary/40">
+                        <span class="text-[10px] font-black text-primary uppercase tracking-widest italic">Predator</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">BR Strategist</span>
+                        <div class="h-[1px] flex-grow bg-slate-200 dark:bg-slate-800"></div>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic mb-1">Coach Drake</h3>
+                    <p class="text-xs font-bold text-primary mb-4 uppercase tracking-tighter">Apex / Fortnite</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-trophy text-amber-500"></i> ALGS Pro League</div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-clock"></i> 10,000+ Hours</div>
+                    </div>
+                    <div class="flex gap-4 opacity-40 group-hover:opacity-100 transition-opacity">
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-twitch"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="h-80 overflow-hidden relative">
+                    <img src="assets/m4" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" alt="Coach Viper">
+                    <div class="absolute top-4 right-4 px-3 py-1 bg-slate-950/80 backdrop-blur-md rounded-full border border-primary/40">
+                        <span class="text-[10px] font-black text-primary uppercase tracking-widest italic">Legend</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">FGC Expert</span>
+                        <div class="h-[1px] flex-grow bg-slate-200 dark:bg-slate-800"></div>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase italic mb-1">Coach Viper</h3>
+                    <p class="text-xs font-bold text-primary mb-4 uppercase tracking-tighter">SF6 / Tekken 8</p>
+                    <div class="space-y-2 mb-6">
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-trophy text-amber-500"></i> EVO Top 8 Finisher</div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500"><i class="fa-solid fa-clock"></i> 15,000+ Hours</div>
+                    </div>
+                    <div class="flex gap-4 opacity-40 group-hover:opacity-100 transition-opacity">
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-twitch"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-12 md:hidden">
+            <a href="contact.html" class="w-full flex items-center justify-center gap-3 px-8 py-5 bg-primary text-white font-black uppercase italic tracking-widest rounded-2xl shadow-lg shadow-primary/30">
+                Train with Experts <i class="fa-solid fa-bolt"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+                Exclusive <span class="text-primary ">Loot Drops</span>
+            </h2>
+            <p class="mt-4 text-slate-500 dark:text-slate-400 font-medium">Limited time offers to help you dominate the arena for less.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="group relative bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10 transform hover:-translate-y-2 overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-500">
+                        <i class="fa-solid fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xs font-black text-emerald-500 uppercase tracking-[0.3em] mb-2">New Recruit</h3>
+                    <h4 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic leading-none mb-4">20% OFF <br> <span class="text-lg">First Session</span></h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">Ready for your first mission? Use code <span class="font-bold text-slate-900 dark:text-white">NEXUS20</span> at checkout.</p>
+                    
+                    <button class="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase italic tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-emerald-500/30">
+                        Claim Discount
+                    </button>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-900 rounded-[2.5rem] p-8 border border-primary/30 transition-all duration-500 hover:border-primary hover:shadow-2xl hover:shadow-primary/20 transform hover:-translate-y-2 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <div class="w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-primary/40">
+                        <i class="fa-solid fa-crown text-2xl"></i>
+                    </div>
+                    <h3 class="text-xs font-black text-primary uppercase tracking-[0.3em] mb-2">Elite Status</h3>
+                    <h4 class="text-3xl font-black text-white uppercase italic leading-none mb-4">Save 40% <br> <span class="text-lg">Monthly Pass</span></h4>
+                    <p class="text-slate-400 text-sm mb-8 leading-relaxed">Unlimited access, zero lag. The ultimate choice for serious daily grinders.</p>
+                    
+                    <button class="w-full py-4 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-primary/40">
+                        View Memberships
+                    </button>
+                </div>
+                <div class="absolute top-6 right-6 px-3 py-1 bg-primary text-[10px] font-black uppercase text-white rounded-full animate-bounce">
+                    Most Popular
+                </div>
+            </div>
+
+            <div class="group relative bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/10 transform hover:-translate-y-2 overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20"></div>
+
+                <div class="relative z-10">
+                    <div class="w-14 h-14 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
+                        <i class="fa-solid fa-trophy text-2xl"></i>
+                    </div>
+                    <h3 class="text-xs font-black text-blue-500 uppercase tracking-[0.3em] mb-2">Challenger</h3>
+                    <h4 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic leading-none mb-4">FREE ENTRY <br> <span class="text-lg">Weekly Brackets</span></h4>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">Book 5+ hours and get a free slot in our Saturday Night Showdown.</p>
+                    
+                    <button class="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-black uppercase italic tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-500/30">
+                        Join Bracket
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="relative py-24 md:py-32 bg-slate-900 overflow-hidden border-t border-white/5">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] opacity-50"></div>
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" 
+             style="background-image: radial-gradient(circle, #8b5cf6 1px, transparent 1px); background-size: 50px 50px;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 italic">End of Mission Briefing</span>
+        </div>
+
+        <h2 class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase italic tracking-tighter leading-[0.85] mb-8">
+            Ready to <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-violet-400 to-primary bg-[length:200%_auto] animate-gradient ">Level Up</span> Your Game?
+        </h2>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-12 font-medium">
+            The arena is prepped, the servers are live, and the competition is waiting. Don't just watch the game—dominate it.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+            <a href="booknow.html" 
+               class="group relative w-full sm:w-auto px-12 py-5 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest rounded-2xl shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all transform hover:scale-105 active:scale-95 overflow-hidden">
+               <span class="relative z-10 flex items-center justify-center gap-3">
+                   🎮 Book Now <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+               </span>
+               <div class="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-[-20deg]"></div>
+            </a>
+
+            <a href="comingsoon.html" 
+               class="w-full sm:w-auto px-12 py-5 bg-transparent border-2 border-white/20 hover:border-white text-white font-black uppercase italic tracking-widest rounded-2xl transition-all hover:bg-white/10 flex items-center justify-center gap-3 active:scale-95">
+               🏆 Join Community
+            </a>
+        </div>
+
+        <p class="mt-12 text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">
+            <i class="fa-solid fa-shield-halved text-primary mr-2"></i> Instant Confirmation & 24/7 Access
+        </p>
+    </div>
+</section>
+
+<style>
+    /* Gradient Text Animation */
+    @keyframes gradientShift {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+    .animate-gradient {
+        animation: gradientShift 3s linear infinite;
+    }
+    .text-glow {
+        filter: drop-shadow(0 0 15px rgba(139,92,246,0.4));
+    }
+</style>
+ <footer class="bg-slate-50 dark:bg-slate-950 pt-16 pb-8 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        
+        <div class="space-y-6">
+            <a href="index.html">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-10 w-auto rounded-lg shadow-lg shadow-primary/20">
+                <span class="text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+            </div>
+            </a>
+            
+            <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                The ultimate destination for competitive gamers. Top-tier hardware, community, and victory.
+            </p>
+            <div class="flex gap-4">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-twitch"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 grid grid-cols-2 gap-8">
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-sm tracking-widest text-slate-900 dark:text-white">Navigation</h4>
+                <ul class="space-y-4 text-slate-500 dark:text-slate-400">
+                    <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="home2.html" class="hover:text-primary transition-colors">Home 2</a></li>
+                    <li><a href="about.html" class="hover:text-primary transition-colors">About</a></li>
+                    <li><a href="service.html" class="hover:text-primary transition-colors">Service</a></li>
+                    <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-sm tracking-widest text-slate-900 dark:text-white">Resources</h4>
+                <ul class="space-y-4 text-slate-500 dark:text-slate-400">
+                    <li><a href="pricing.html" class="hover:text-primary transition-colors">Pricing</a></li>
+                    <li><a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a></li>
+                    <li><a href="booknow.html" class="hover:text-primary transition-colors text-primary font-bold">Book Now</a></li>
+                    <li><a href="404.html" class="hover:text-primary transition-colors">404 Page</a></li>
+                    <li><a href="comingsoon.html" class="hover:text-primary transition-colors">Coming Soon</a></li>
+                </ul>
+            </div>
+        </div>
+
+       <div class="bg-slate-100 dark:bg-slate-900 p-6 lg:p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 
+            md:col-span-3 lg:col-span-1 flex flex-col md:flex-row lg:flex-col md:items-center lg:items-start gap-6 lg:gap-4 transition-all duration-300">
+    
+    <div class="md:flex-1 lg:w-full">
+        <h4 class="font-black mb-2 uppercase text-sm tracking-[0.2em] text-slate-900 dark:text-white">
+            Newsletter
+        </h4>
+        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+            Get the latest tournament updates and gear drops.
+        </p>
+    </div>
+
+    <form class="flex flex-col md:flex-row lg:flex-col gap-3 md:flex-[1.5] lg:w-full">
+        <input type="email" placeholder="EMAIL ADDRESS" 
+               class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-xl text-xs font-black focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-slate-400">
+        
+        <button class="w-full md:w-auto lg:w-full bg-primary hover:bg-violet-600 text-white font-black py-3 px-8 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 uppercase text-[10px] tracking-[0.2em] whitespace-nowrap">
+            Subscribe
+        </button>
+    </form>
+</div>
+
+<style>
+    /* Global Typography Reset: Bold & No Italics */
+    * {
+        font-style: normal !important;
+    }
+</style>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-sm text-center">
+        <p>&copy; 2026 Nexus Esports Training Facility. All rights reserved.</p>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-primary">Privacy Policy</a>
+            <a href="#" class="hover:text-primary">Terms of Service</a>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        function appState() {
+            return {
+                mobileMenu: false,
+                darkMode: false,
+                dir: 'ltr',
+
+                initTheme() {
+                    if (localStorage.getItem('dark-mode') === 'true' || 
+                       (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        this.darkMode = true;
+                        document.documentElement.classList.add('dark');
+                    }
+                },
+
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('dark-mode', this.darkMode);
+                    if (this.darkMode) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                },
+
+                initDir() {
+                    const savedDir = localStorage.getItem('site-dir') || 'ltr';
+                    this.dir = savedDir;
+                    document.getElementById('html-tag').dir = savedDir;
+                },
+
+                toggleDir() {
+                    this.dir = this.dir === 'ltr' ? 'rtl' : 'ltr';
+                    localStorage.setItem('site-dir', this.dir);
+                    document.getElementById('html-tag').dir = this.dir;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

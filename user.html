@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://placehold.co/40x40/8b5cf6/ffffff?text=N">
+
+    <title>Nexus Gamer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6', // Violet 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .text-glow { filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.5)); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #8b5cf6; border-radius: 10px; }
+        /* Ensuring no italics globally as requested */
+        * { font-style: normal !important; }
+    </style>
+</head>
+<body x-data="dashboard()" :class="darkMode ? 'dark' : ''" class="bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+
+    <div :dir="sidebarRTL ? 'rtl' : 'ltr'" class="min-h-screen flex flex-col lg:flex-row">
+        
+        <aside :class="sidebarRTL ? 'lg:border-l' : 'lg:border-r'" 
+               class="hidden lg:flex lg:flex-col lg:h-screen lg:w-72 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 transition-all duration-300 lg:sticky lg:top-0 lg:p-6">
+            
+            <a href="index.html">
+            <div class="flex-shrink-0 flex items-center gap-2 lg:gap-3">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
+            <span class="text-xl lg:text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </div>
+        </a>
+        <br>
+
+            <nav class="flex flex-col gap-2">
+                <button @click="tab = 'overview'" :class="tab === 'overview' ? 'text-primary bg-primary/5' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'" class="px-4 py-3 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest">
+                    <i class="fa-solid fa-house-chimney text-lg"></i>
+                    <span>Home</span>
+                </button>
+                <button @click="tab = 'tournaments'" :class="tab === 'tournaments' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="px-4 py-3 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest">
+                    <i class="fa-solid fa-trophy text-lg"></i>
+                    <span>Compete</span>
+                </button>
+                <button @click="tab = 'analytics'" :class="tab === 'analytics' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="px-4 py-3 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest">
+                    <i class="fa-solid fa-chart-simple text-lg"></i>
+                    <span>Stats</span>
+                </button>
+                <button @click="tab = 'profile'" :class="tab === 'profile' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="px-4 py-3 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest">
+                    <i class="fa-solid fa-user-gear text-lg"></i>
+                    <span>Profile</span>
+                </button>
+
+                <div class="flex flex-col mt-auto gap-2 border-t border-slate-100 dark:border-slate-800 pt-6">
+                    <button @click="toggleTheme()" class="flex items-center gap-4 p-4 text-slate-400 hover:text-primary transition-colors font-bold text-xs uppercase tracking-widest">
+                        <i :class="darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon'"></i>
+                        <span x-text="darkMode ? 'Light Mode' : 'Dark Mode'"></span>
+                    </button>
+                    <button @click="toggleRTL()" class="flex items-center gap-4 p-4 text-slate-400 hover:text-primary transition-colors font-bold text-xs uppercase tracking-widest">
+                        <i class="fa-solid fa-arrows-left-right"></i>
+                        <span x-text="sidebarRTL ? 'Set LTR' : 'Set RTL'"></span>
+                    </button>
+                    <a href="login.html">
+                        <button class="flex items-center gap-4 p-4 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all font-bold text-xs uppercase tracking-widest mt-4">
+                        <i class="fa-solid fa-power-off"></i>
+                        <span>Logout</span>
+                    </button>
+                    </a>
+                    
+                </div>
+            </nav>
+        </aside>
+
+        <div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[100] lg:hidden">
+            <div @click="mobileMenu = false" class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"></div>
+            <nav class="absolute top-0 bottom-0 w-80 max-w-[85%] bg-white dark:bg-slate-900 shadow-2xl p-6 transition-all border-slate-200 dark:border-slate-800" 
+                 :class="sidebarRTL ? 'right-0 border-l' : 'left-0 border-r'">
+                
+                <div class="flex items-center justify-between mb-10">
+                    <a href="index.html">
+            <div class="flex-shrink-0 flex items-center gap-2 lg:gap-3">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
+            <span class="text-xl lg:text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </div>
+        </a>
+                    <button @click="mobileMenu = false" class="text-slate-400 text-2xl"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="space-y-2">
+                    <button @click="tab = 'overview'; mobileMenu = false" :class="tab === 'overview' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="w-full px-4 py-4 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest text-left">
+                        <i class="fa-solid fa-house-chimney text-lg"></i><span>Home</span>
+                    </button>
+                    <button @click="tab = 'tournaments'; mobileMenu = false" :class="tab === 'tournaments' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="w-full px-4 py-4 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest text-left">
+                        <i class="fa-solid fa-trophy text-lg"></i><span>Compete</span>
+                    </button>
+                    <button @click="tab = 'analytics'; mobileMenu = false" :class="tab === 'analytics' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="w-full px-4 py-4 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest text-left">
+                        <i class="fa-solid fa-chart-simple text-lg"></i><span>Stats</span>
+                    </button>
+                    <button @click="tab = 'profile'; mobileMenu = false" :class="tab === 'profile' ? 'text-primary bg-primary/5' : 'text-slate-400'" class="w-full px-4 py-4 flex items-center gap-4 rounded-xl transition-all font-bold text-sm uppercase tracking-widest text-left">
+                        <i class="fa-solid fa-user-gear text-lg"></i><span>Profile</span>
+                    </button>
+                </div>
+
+                <div class="absolute bottom-8 left-6 right-6 space-y-4">
+                    <button @click="toggleRTL()" class="w-full flex justify-between items-center bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
+                        <span class="text-xs font-bold uppercase dark:text-white">Switch LTR/RTL</span>
+                        <i class="fa-solid fa-arrows-left-right text-primary"></i>
+                    </button>
+                    
+                    <div class="flex justify-between items-center bg-slate-100 dark:bg-slate-800 p-4 rounded-xl">
+                        <span class="text-xs font-bold uppercase dark:text-white">Theme Mode</span>
+                        <button @click="toggleTheme()" class="text-primary"><i :class="darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon'"></i></button>
+                    </div>
+                    <a href="login.html">
+                                            <button class="w-full p-4 bg-red-500/10 text-red-500 rounded-xl font-black uppercase text-xs tracking-widest">Logout</button>
+
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <main class="flex-grow flex flex-col h-screen overflow-y-auto">
+            
+            <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md p-4 lg:px-8 lg:py-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+                <div class="flex items-center gap-4">
+                    <button @click="mobileMenu = true" class="lg:hidden p-2 text-slate-400 hover:text-primary transition-colors">
+                        <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                    </button>
+
+                    <div class="flex flex-col">
+                        <h2 class="text-xl lg:text-2xl font-black uppercase dark:text-white leading-none" x-text="tabTitles[tab]"></h2>
+                        <p class="text-[9px] text-slate-500 uppercase font-bold tracking-[0.2em] mt-1">Status: Online • Region: US-E</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-3 lg:gap-6">
+                    <div class="flex items-center gap-3 bg-slate-100 dark:bg-slate-900 p-1 lg:pr-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                        <img src="assets/av1" class="w-8 h-8 lg:w-10 lg:h-10 rounded-lg bg-primary shadow-sm" alt="User Avatar">
+                        <div class="hidden sm:block text-left leading-none">
+                            <p class="text-xs font-black dark:text-white">@ShadowBlade_99</p>
+                            <span class="text-[9px] text-primary font-bold uppercase">Pro Member</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="p-4 lg:p-8 space-y-8 max-w-[1600px] mx-auto w-full">
+                
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+                        <div class="relative z-10">
+                            <p class="text-[10px] font-black uppercase text-slate-400 mb-2">Active Rank</p>
+                            <h3 class="text-2xl font-black dark:text-white text-glow uppercase leading-none">Gold II</h3>
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="text-[10px] font-bold text-emerald-500">+12 LP Today</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-ranking-star absolute -right-4 -bottom-4 text-6xl text-slate-100 dark:text-slate-800 opacity-20 group-hover:text-primary transition-all"></i>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm group">
+                        <p class="text-[10px] font-black uppercase text-slate-400 mb-2">Playtime</p>
+                        <h3 class="text-2xl font-black dark:text-white uppercase leading-none">142.5h</h3>
+                        <div class="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full mt-4 overflow-hidden">
+                            <div class="bg-primary h-full w-[70%]"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <p class="text-[10px] font-black uppercase text-slate-400 mb-2">Next Session</p>
+                        <h3 class="text-xl font-black text-primary uppercase leading-none">PC Zone-04</h3>
+                        <p class="text-[10px] text-slate-500 mt-2 font-bold uppercase">18:00 (Today)</p>
+                    </div>
+
+                    <div class="bg-primary p-6 rounded-[2rem] shadow-xl shadow-primary/20 relative group cursor-pointer">
+                        <div class="relative z-10">
+                            <p class="text-[10px] font-black uppercase text-white/70 mb-2">Tournament</p>
+                            <h3 class="text-xl font-black text-white uppercase leading-none">VCT Open</h3>
+                            <button class="mt-4 px-4 py-2 bg-white text-primary text-[10px] font-black rounded-lg uppercase">Join Now</button>
+                        </div>
+                        <i class="fa-solid fa-fire absolute -right-2 -bottom-2 text-6xl text-white/10"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-xl font-black uppercase dark:text-white">⚡ Instant Book</h3>
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+                        </div>
+                        <div class="space-y-6">
+                            <div>
+                                <label class="text-[10px] font-black uppercase text-slate-400 block mb-3">Select Rig</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button class="py-3 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 border-2 border-primary text-primary text-[10px] font-black uppercase">PC Lounge</button>
+                                    <button class="py-3 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 border-2 border-transparent text-slate-400 text-[10px] font-black uppercase">Console</button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black uppercase text-slate-400 block mb-3">Time Slot</label>
+                                <select class="w-full bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded-xl border-0 focus:ring-2 focus:ring-primary font-bold text-sm">
+                                    <option>18:00 - 20:00 (2h)</option>
+                                    <option>20:00 - 22:00 (2h)</option>
+                                </select>
+                            </div>
+                            <button class="w-full py-5 bg-primary text-white font-black uppercase tracking-widest rounded-2xl shadow-lg shadow-primary/30 active:scale-95 transition-all">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-xl font-black uppercase dark:text-white mb-8">🏆 Active Tournaments</h3>
+                        <div class="space-y-4">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-6 bg-slate-50 dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 gap-4 group hover:border-primary transition-all">
+                                <div class="flex items-center gap-4 text-left">
+                                    <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-bolt-lightning"></i></div>
+                                    <div>
+                                        <h4 class="font-black dark:text-white uppercase">Warzone Weekly</h4>
+                                        <p class="text-[10px] text-slate-500 font-bold uppercase">$500 POOL • 12/24 TEAMS</p>
+                                    </div>
+                                </div>
+                                <button class="px-6 py-3 bg-slate-900 dark:bg-white dark:text-slate-950 text-white text-[10px] font-black uppercase rounded-xl tracking-widest">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-xl font-black uppercase dark:text-white mb-8">📊 Performance Logs</h3>
+                        <div class="h-64 w-full flex items-end justify-between px-4">
+                            <div class="w-[12%] bg-slate-100 dark:bg-slate-800 rounded-t-xl h-[40%]"></div>
+                            <div class="w-[12%] bg-slate-100 dark:bg-slate-800 rounded-t-xl h-[60%]"></div>
+                            <div class="w-[12%] bg-primary rounded-t-xl h-[85%] shadow-lg shadow-primary/30"></div>
+                            <div class="w-[12%] bg-slate-100 dark:bg-slate-800 rounded-t-xl h-[50%]"></div>
+                            <div class="w-[12%] bg-slate-100 dark:bg-slate-800 rounded-t-xl h-[70%]"></div>
+                            <div class="w-[12%] bg-slate-100 dark:bg-slate-800 rounded-t-xl h-[95%]"></div>
+                        </div>
+                        <div class="grid grid-cols-3 mt-8 border-t dark:border-slate-800 pt-8 text-center">
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">Win Rate</p><p class="text-xl font-black dark:text-white">68%</p></div>
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">K/D Ratio</p><p class="text-xl font-black dark:text-white">2.41</p></div>
+                            <div><p class="text-[10px] font-black text-slate-400 uppercase">Accuracy</p><p class="text-xl font-black dark:text-white">44%</p></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <h3 class="text-xl font-black uppercase dark:text-white mb-8">🥇 Elite Rankings</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-4 p-4 bg-primary text-white rounded-2xl shadow-xl shadow-primary/20 transform scale-[1.02]">
+                                <span class="font-black w-4 text-lg">14</span>
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-8 h-8 rounded-lg bg-white/20">
+                                <span class="flex-grow font-black uppercase text-xs tracking-tighter text-left">ShadowBlade_99 (You)</span>
+                                <span class="text-xs font-black">1,120 LP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function dashboard() {
+            return {
+                tab: 'overview',
+                mobileMenu: false,
+                darkMode: localStorage.getItem('dark') === 'true',
+                sidebarRTL: localStorage.getItem('rtl') === 'true',
+                tabTitles: {
+                    overview: 'Arena Commander',
+                    tournaments: 'Live Operations',
+                    analytics: 'Data Core',
+                    profile: 'Pilot Dossier'
+                },
+                toggleTheme() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('dark', this.darkMode);
+                    document.documentElement.classList.toggle('dark', this.darkMode);
+                },
+                toggleRTL() {
+                    this.sidebarRTL = !this.sidebarRTL;
+                    localStorage.setItem('rtl', this.sidebarRTL);
+                },
+                init() {
+                    // Initialize theme on load
+                    if (this.darkMode) document.documentElement.classList.add('dark');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

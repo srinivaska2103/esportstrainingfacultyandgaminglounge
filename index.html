@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://placehold.co/40x40/8b5cf6/ffffff?text=N">
+    <title>Nexus Esports | Train Like a Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        .hero-video-overlay {
+            background: linear-gradient(0deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 100%);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6', // Violet 500
+                        secondary: '#10b981', // Emerald 500
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300" 
+      x-data="appState()" 
+      x-init="initTheme(); initDir();">
+
+    <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+        <a href="index.html">
+            <div class="flex-shrink-0 flex items-center gap-2 lg:gap-3">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
+            <span class="text-xl lg:text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </div>
+        </a>
+        
+
+       <div class="hidden lg:flex items-center space-x-4 xl:space-x-6" 
+     x-data="{ 
+        active(path) { 
+            const current = window.location.pathname;
+            // Matches if current path ends with the href or is the root
+            return current.endsWith(path) || (path === 'index.html' && (current === '/' || current === ''));
+        } 
+     }">
+    
+    <a href="index.html" 
+       :class="active('index.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Home
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('index.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="home2.html" 
+       :class="active('home2.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Home 2
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('home2.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="about.html" 
+       :class="active('about.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        About
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('about.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="service.html" 
+       :class="active('service.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Service
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('service.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="contact.html" 
+       :class="active('contact.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Contact
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('contact.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <div class="relative" x-data="{ open: false }">
+        <button @click="open = !open" 
+                :class="active('user.html') ? 'text-primary' : ''"
+                class="flex items-center gap-1 hover:text-primary font-medium text-sm xl:text-base focus:outline-none">
+            Dashboard <i class="fa-solid fa-chevron-down text-[10px] transition-transform" :class="open ? 'rotate-180' : ''"></i>
+        </button>
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-100"
+             x-transition:enter-start="transform opacity-0 scale-95"
+             x-transition:enter-end="transform opacity-100 scale-100"
+             @click.away="open = false" 
+             x-cloak 
+             class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-[60]">
+            <a href="user.html" 
+               :class="active('user.html') ? 'bg-slate-100 dark:bg-slate-700 text-primary' : ''"
+               class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+        </div>
+    </div>
+</div>
+
+        <div class="hidden lg:flex items-center space-x-3 xl:space-x-4 border-l border-slate-200 dark:border-slate-700 pl-4 xl:pl-6">
+            <div class="flex items-center gap-1">
+                <button @click="toggleDark()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i x-show="!darkMode" class="fa-solid fa-moon"></i>
+                    <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+                </button>
+                <button @click="toggleDir()" class="text-[10px] font-black px-1.5 py-0.5 border border-slate-400 rounded hover:bg-slate-100 dark:hover:bg-slate-800 uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
+            </div>
+            
+            <a href="login.html" class="text-primary hover:text-white hover:bg-primary border border-primary px-4 py-1.5 rounded-full text-sm font-bold transition-all transform hover:scale-105">Login</a>
+            <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105">Book Now</a>
+        </div>
+
+        <div class="lg:hidden flex items-center gap-4">
+            <button @click="mobileMenu = !mobileMenu" class="text-2xl focus:outline-none p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                <i class="fa-solid" :class="mobileMenu ? 'fa-xmark' : 'fa-bars'"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <div x-show="mobileMenu" 
+     x-cloak 
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0 -translate-y-4"
+     x-transition:enter-end="opacity-100 translate-y-0"
+     x-data="{ 
+        active(path) { 
+            const current = window.location.pathname;
+            return current.endsWith(path) || (path === 'index.html' && (current === '/' || current === ''));
+        } 
+     }"
+     class="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-6 space-y-4 shadow-xl">
+    
+    <a href="index.html" 
+       :class="active('index.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Home</a>
+    
+    <a href="home2.html" 
+       :class="active('home2.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Home 2</a>
+    
+    <a href="about.html" 
+       :class="active('about.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">About</a>
+    
+    <a href="service.html" 
+       :class="active('service.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Service</a>
+    
+    <a href="contact.html" 
+       :class="active('contact.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Contact</a>
+    
+    <div x-data="{ open: false }">
+        <button @click="open = !open" 
+                :class="active('user.html') ? 'text-primary' : 'text-slate-600 dark:text-slate-300'"
+                class="flex justify-between items-center w-full text-lg font-bold py-2">
+            User Dashboards <i class="fa-solid fa-chevron-down text-sm transition-transform" :class="open ? 'rotate-180' : ''"></i>
+        </button>
+        <div x-show="open" x-cloak class="pl-4 mt-2 space-y-3 border-l border-slate-200 dark:border-slate-800">
+            <a href="user.html" 
+               :class="active('user.html') ? 'text-primary font-bold' : 'text-slate-500'"
+               class="block text-base">Profile</a>
+        </div>
+    </div>
+
+    <hr class="border-slate-200 dark:border-slate-800 my-4">
+    
+    <div class="flex items-center justify-between py-2">
+        <span class="text-sm font-bold uppercase tracking-wider text-slate-400">Settings</span>
+        <div class="flex gap-3">
+            <button @click="toggleDark()" class="w-12 h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl transition-colors">
+                <i x-show="!darkMode" class="fa-solid fa-moon"></i>
+                <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+            </button>
+            <button @click="toggleDir()" class="px-4 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl font-black text-xs uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 pt-2">
+        <a href="login.html" 
+           class="block w-full text-center border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-white transition-all">
+           Login
+        </a>
+        <a href="booknow.html" 
+           class="block w-full text-center bg-primary text-white py-4 rounded-xl font-black shadow-lg shadow-primary/30 active:scale-95 transition-all">
+           BOOK NOW
+        </a>
+    </div>
+</div>
+    </nav>
+
+   <section class="relative h-screen flex items-center justify-center overflow-hidden bg-slate-950">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+            src="assets/indexhero" 
+            class="w-full h-full object-cover scale-105 animate-pulse-slow transition-all duration-700" 
+            alt="Nexus Gaming Arena"
+        >
+        
+        <div class="absolute inset-0 bg-slate-950/40"></div>
+        
+        <div class="absolute inset-0 bg-[radial-gradient(circle,transparent_20%,rgba(2,6,23,0.8)_100%)]"></div>
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent"></div>
+    </div>
+
+    <style>
+        /* Smooth Breathing Animation */
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1.02); }
+            50% { transform: scale(1.06); }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse-slow 12s ease-in-out infinite;
+        }
+
+        /* Ensure Bold / No Italic / High Contrast Text */
+        .hero-title {
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            font-style: normal !important;
+        }
+        
+        .hero-text {
+            font-style: normal !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .text-glow {
+            filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.8));
+        }
+    </style>
+
+    <div class="relative z-10 text-center px-4 max-w-5xl">
+        <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] uppercase tracking-tighter">
+            Level Up Your Game<br>
+            <span class="text-primary ">Train Like a Pro</span>
+        </h1>
+        
+        <p class="hero-text mt-8 text-lg md:text-2xl text-white max-w-3xl mx-auto font-bold uppercase tracking-wide">
+            Elite esports training, high-performance gaming rigs, and competitive tournaments
+        </p>
+
+        <div class="mt-12 flex flex-col sm:flex-row gap-5 justify-center">
+            <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-2xl shadow-primary/40 uppercase italic tracking-widest text-sm">
+                 Book a Session
+            </a>
+            <a href="comingsoon.html" class="bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white border-2 border-white/20 px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 transition-all uppercase tracking-widest text-sm">
+                Join Training
+            </a>
+        </div>
+    </div>
+</section>
+
+  <section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                The Nexus <span class="text-primary">Advantage</span>
+            </h2>
+            <div class="w-24 h-1.5 bg-primary mx-auto mt-4 rounded-full"></div>
+            <p class="mt-6 text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Elite performance meets pro-grade comfort. Discover why champions train at Nexus.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-primary/20 hover:border-primary transition-all duration-300 transform hover:-translate-y-2">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="assets/highendpc" 
+                         alt="High-End PC" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4 bg-primary text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">God-Tier Rigs</h3>
+                    <p class="mt-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                        RTX 4090 GPUs, Core i9 processors, and 240Hz monitors for the smoothest gameplay imaginable.
+                    </p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-primary/20 hover:border-primary transition-all duration-300 transform hover:-translate-y-2">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="assets/Gaming Accessories" 
+                         alt="Gaming Accessories" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4 bg-primary text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-keyboard"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">Pro Gear</h3>
+                    <p class="mt-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                        Mechanical keyboards, precision mice, and spatial audio headsets to hear every footstep.
+                    </p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-primary/20 hover:border-primary transition-all duration-300 transform hover:-translate-y-2">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="assets/consolegaming" 
+                         alt="Console Gaming" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4 bg-primary text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">Console Zones</h3>
+                    <p class="mt-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                        Play PS5 and Xbox Series X on 4K OLED displays with ultra-comfortable pro-gaming chairs.
+                    </p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-primary/20 hover:border-primary transition-all duration-300 transform hover:-translate-y-2">
+                <div class="h-52 overflow-hidden relative">
+                    <img src="assets/Server Room" 
+                         alt="Server Room" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4 bg-primary text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">Zero-Lag Fiber</h3>
+                    <p class="mt-3 text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                        Dedicated enterprise-grade fiber connection with the lowest ping in the city.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-900 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div class="max-w-2xl">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                    Pro <span class="text-primary">Training</span> Programs
+                </h2>
+                <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">
+                    From iron to immortal—our certified coaches help you master the mechanics and strategies needed to dominate the lobby.
+                </p>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 bg-primary hover:bg-violet-600 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105 whitespace-nowrap">
+                VIEW ALL PROGRAMS <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="group bg-slate-50 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:border-primary transition-all duration-300 shadow-sm hover:shadow-xl">
+                <div class="h-48 overflow-hidden">
+                    <img src="assets/begginertrainer" 
+                         alt="Beginner Training" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-6">
+                    <div class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Level 01</div>
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">Beginner Training</h3>
+                    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Master the basics: sensitivity tuning, aim training routines, and fundamental game sense.</p>
+                </div>
+            </div>
+
+            <div class="group bg-slate-50 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:border-primary transition-all duration-300 shadow-sm hover:shadow-xl">
+                <div class="h-48 overflow-hidden">
+                    <img src="assets/Advanced Coaching" 
+                         alt="Advanced Coaching" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-6">
+                    <div class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Level 02</div>
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">Advanced Coaching</h3>
+                    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">High-level strategy, team play dynamics, utility usage, and map control mastery.</p>
+                </div>
+            </div>
+
+            <div class="group bg-slate-50 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:border-primary transition-all duration-300 shadow-sm hover:shadow-xl">
+                <div class="h-48 overflow-hidden">
+                    <img src="assets/Pro Bootcamps" 
+                         alt="Pro Bootcamps" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-6">
+                    <div class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Elite</div>
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">Pro Bootcamps</h3>
+                    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Intensive weekend sessions. Scrim against top teams with live VOD review and analysis.</p>
+                </div>
+            </div>
+
+            <div class="group bg-slate-50 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 hover:border-primary transition-all duration-300 shadow-sm hover:shadow-xl">
+                <div class="h-48 overflow-hidden">
+                    <img src="assets/Personal Coaching" 
+                         alt="Personal Coaching" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                <div class="p-6">
+                    <div class="text-xs font-bold uppercase tracking-widest text-primary mb-2">Personal</div>
+                    <h3 class="text-xl font-black uppercase italic dark:text-white">1-on-1 Sessions</h3>
+                    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Private mentoring focused entirely on your playstyle, mistakes, and personal goals.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="space-y-12">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold uppercase tracking-widest mb-4">
+                        <i class="fa-solid fa-chart-line text-xs"></i> THE DATA ADVANTAGE
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic leading-tight">
+                        Analytics <span class="text-primary">Engine</span>
+                    </h2>
+                    <p class="mt-6 text-xl text-slate-600 dark:text-slate-400 max-w-2xl">
+                        We don't just guess; we measure. Our facility provides professional-grade tools to break down your gameplay, identify weaknesses, and chart your path to the podium.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    
+                    <div class="group flex gap-5 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary transition-all">
+                        <div class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-primary/10 rounded-xl border border-primary/20 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-satellite-dish text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold dark:text-white">Match Analysis Tools</h3>
+                            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Heatmaps, utility usage tracking, and automated macro-stat breakdown.</p>
+                        </div>
+                    </div>
+
+                    <div class="group flex gap-5 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary transition-all">
+                        <div class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-primary/10 rounded-xl border border-primary/20 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-chalkboard-user text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold dark:text-white">VOD Review Sessions</h3>
+                            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Certified coaches dissect your gameplay frame-by-frame with on-screen annotation.</p>
+                        </div>
+                    </div>
+
+                    <div class="group flex gap-5 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary transition-all">
+                        <div class="w-14 h-14 flex-shrink-0 flex items-center justify-center bg-primary/10 rounded-xl border border-primary/20 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-gauge-high text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold dark:text-white">Progress Tracking Dashboards</h3>
+                            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">View your long-term performance trends across different agents, maps, and weapons.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="relative hidden lg:block bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl shadow-slate-200/50 dark:shadow-black/50 overflow-hidden"
+                 x-data="analyticsDashboard()"
+                 x-init="initChart()">
+                
+                <div class="absolute -top-1/4 -right-1/4 w-80 h-80 bg-primary/30 rounded-full blur-3xl opacity-50 dark:opacity-20 z-0"></div>
+
+                <div class="relative z-10 flex justify-between items-center mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
+                    <div>
+                        <div class="text-xs font-bold text-slate-400">CURRENT PLAYER</div>
+                        <h4 class="text-2xl font-black italic uppercase dark:text-white group">Nxs_<span class="text-primary group-hover:text-glow">Viper</span></h4>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-sm font-bold rounded-lg dark:text-white hover:bg-slate-200 active:scale-95 transition-all">VALORANT</button>
+                        <button class="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-sm font-bold rounded-lg dark:text-white opacity-50">LOL</button>
+                    </div>
+                </div>
+
+                <div class="relative z-10 grid grid-cols-2 gap-4 mb-8">
+                    <div class="bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 transition-colors">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest">Avg K/D</div>
+                        <div class="mt-1 flex items-baseline gap-2">
+                            <div class="text-4xl font-black italic dark:text-white" x-text="stats.kd">1.45</div>
+                            <div class="text-xs font-bold text-emerald-500 flex items-center gap-1"><i class="fa-solid fa-caret-up"></i> +0.12</div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 transition-colors">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-widest">Avg Win %</div>
+                        <div class="mt-1 flex items-baseline gap-2">
+                            <div class="text-4xl font-black italic dark:text-white" x-text="stats.winRate">68.2</div>
+                            <div class="text-xs font-bold text-emerald-500 flex items-center gap-1"><i class="fa-solid fa-caret-up"></i> +5.1%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative z-10 bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 h-64 overflow-hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h5 class="font-bold dark:text-white">Performance Trend (Last 30 Days)</h5>
+                        <select class="bg-transparent text-xs text-slate-400 font-bold outline-none cursor-pointer">
+                            <option>Ranked</option>
+                            <option>Scrims</option>
+                        </select>
+                    </div>
+                    
+                    <canvas id="performanceChart"></canvas>
+                </div>
+
+                <div class="relative z-10 mt-6 flex gap-3 text-xs text-slate-400 font-medium">
+                    View as:
+                    <button @click="updateData('iron')" class="hover:text-primary active:scale-95 transition-transform" :class="currentTier === 'iron' ? 'text-primary font-bold' : ''">[Iron]</button>
+                    <button @click="updateData('viper')" class="hover:text-primary active:scale-95 transition-transform" :class="currentTier === 'viper' ? 'text-primary font-bold' : ''">[Nxs_Viper]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    function analyticsDashboard() {
+        return {
+            chart: null,
+            currentTier: 'viper',
+            stats: {
+                kd: 1.45,
+                winRate: 68.2,
+                label: 'Nxs_Viper'
+            },
+            initChart() {
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                
+                // Set default Chart.js colors based on light/dark mode
+                const isDark = document.documentElement.classList.contains('dark');
+                Chart.defaults.color = isDark ? '#cbd5e1' : '#64748b'; // slate-300 / slate-500
+                Chart.defaults.borderColor = isDark ? '#334155' : '#e2e8f0'; // slate-700 / slate-200
+
+                this.chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Match 1', 'M5', 'M10', 'M15', 'M20', 'M25', 'M30'],
+                        datasets: [{
+                            label: 'Match Rating (ACS)',
+                            data: [180, 210, 240, 220, 260, 275, 290], // VIPER DATA
+                            borderColor: '#8b5cf6', // primary (violet-500)
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#8b5cf6'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false // We use our own legend above
+                            },
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                suggestedMin: 150,
+                                suggestedMax: 320,
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            updateData(tier) {
+                this.currentTier = tier;
+                
+                if (tier === 'viper') {
+                    // Update Stats
+                    this.stats.kd = 1.45;
+                    this.stats.winRate = 68.2;
+                    // Update Chart Data
+                    this.chart.data.datasets[0].data = [180, 210, 240, 220, 260, 275, 290];
+                    this.chart.options.scales.y.suggestedMax = 320;
+                    this.chart.options.scales.y.suggestedMin = 150;
+                } else if (tier === 'iron') {
+                    // Simulating Iron tier data
+                    this.stats.kd = 0.81;
+                    this.stats.winRate = 48.5;
+                    this.chart.data.datasets[0].data = [110, 130, 105, 140, 135, 120, 145];
+                    this.chart.options.scales.y.suggestedMax = 200;
+                    this.chart.options.scales.y.suggestedMin = 80;
+                }
+                
+                // Re-render the chart smoothly
+                this.chart.update();
+            }
+        }
+    }
+</script>
+<section class="py-24 bg-white dark:bg-slate-900 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-12">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                Community & <span class="text-primary ">Tournaments</span>
+            </h2>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-2xl">
+                Join the elite. Compete in weekly brackets, climb the local leaderboards, and experience the energy of our legendary LAN parties.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-2 relative group rounded-3xl overflow-hidden bg-slate-900 aspect-video lg:aspect-auto flex flex-col justify-end p-8 border border-slate-800 shadow-2xl">
+                <img src="assets/communityindex" 
+                     class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" alt="Tournament Crowd">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+
+                <div class="relative z-10" x-data="countdownTimer('2026-05-20T18:00:00')">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded mb-4 animate-pulse">
+                        <span class="w-2 h-2 bg-white rounded-full"></span> Live Event Starting In
+                    </div>
+                    <h3 class="text-3xl md:text-5xl font-black text-white uppercase italic mb-6">Nexus Valorant <span class="text-primary">Open 2026</span></h3>
+                    
+                    <div class="flex gap-4 md:gap-8 mb-8">
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-black text-white" x-text="days">00</div>
+                            <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Days</div>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-black text-primary">:</div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-black text-white" x-text="hours">00</div>
+                            <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Hours</div>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-black text-primary">:</div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-black text-white" x-text="minutes">00</div>
+                            <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Mins</div>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-black text-primary">:</div>
+                        <div class="text-center">
+                            <div class="text-3xl md:text-5xl font-black text-white" x-text="seconds">00</div>
+                            <div class="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest">Secs</div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4">
+                        <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 shadow-lg shadow-primary/30">REGISTER NOW</a>
+                        <a href="pricing.html" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-8 py-3 rounded-full font-bold transition-all">VIEW BRACKETS</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-3xl p-6 border border-slate-200 dark:border-slate-800">
+                <h4 class="text-xl font-black uppercase italic dark:text-white mb-6 flex justify-between items-center">
+                    Upcoming <span class="text-primary">Events</span>
+                    <i class="fa-solid fa-calendar-days text-sm opacity-50"></i>
+                </h4>
+
+                <div class="space-y-4">
+                    <div class="group flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary transition-all cursor-pointer">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="text-xs font-black">MAY</span>
+                            <span class="text-lg font-black leading-none">24</span>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-bold text-sm dark:text-white group-hover:text-primary transition-colors">League of Legends LAN</h5>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">5v5 Tournament • $500 Pool</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                    <div class="group flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary transition-all cursor-pointer">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="text-xs font-black">JUN</span>
+                            <span class="text-lg font-black leading-none">02</span>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-bold text-sm dark:text-white group-hover:text-primary transition-colors">CS2 Pro-Sesh</h5>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Advanced Coaching Workshop</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                    <div class="group flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary transition-all cursor-pointer">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="text-xs font-black">JUN</span>
+                            <span class="text-lg font-black leading-none">15</span>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-bold text-sm dark:text-white group-hover:text-primary transition-colors">All-Night LAN Party</h5>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Free Pizza • Unlimited Play</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+
+                    <div class="group flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-primary transition-all cursor-pointer">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex flex-col items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                            <span class="text-xs font-black">JUN</span>
+                            <span class="text-lg font-black leading-none">21</span>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-bold text-sm dark:text-white group-hover:text-primary transition-colors">Tekken 8 Clash</h5>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">1v1 Brackets • PS5 Only</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </div>
+
+                <a href="contact.html" class="block w-full text-center mt-6 py-3 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-primary hover:border-primary transition-all">
+                    View Full Schedule
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function countdownTimer(targetDate) {
+        return {
+            days: '00',
+            hours: '00',
+            minutes: '00',
+            seconds: '00',
+            endTime: new Date(targetDate).getTime(),
+            
+            init() {
+                this.update();
+                setInterval(() => this.update(), 1000);
+            },
+            
+            update() {
+                const now = new Date().getTime();
+                const distance = this.endTime - now;
+                
+                if (distance < 0) return;
+                
+                this.days = this.formatNumber(Math.floor(distance / (1000 * 60 * 60 * 24)));
+                this.hours = this.formatNumber(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                this.minutes = this.formatNumber(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                this.seconds = this.formatNumber(Math.floor((distance % (1000 * 60)) / 1000));
+            },
+            
+            formatNumber(num) {
+                return num < 10 ? '0' + num : num;
+            }
+        }
+    }
+</script>
+<section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                Explore the <span class="text-primary ">Lounge</span>
+            </h2>
+            <div class="w-24 h-1.5 bg-primary mx-auto mt-4 rounded-full"></div>
+            <p class="mt-6 text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                From focused solo grinds to high-stakes team battles, find your perfect setup.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-primary/20 hover:border-primary/50">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="assets/sologamingpod " 
+                         alt="Solo Gaming Pod" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-4 left-4 bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center border border-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-user text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white group-hover:text-primary transition-colors">Solo Gaming Pods</h3>
+                    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Focused concentration. Get into the zone with noise-canceling headsets, comfortable pro chairs, and optimized single-station lighting.
+                    </p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-primary/20 hover:border-primary/50">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="assets/Team Battle Room" 
+                         alt="Team Battle Room" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-4 left-4 bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center border border-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-users text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white group-hover:text-primary transition-colors">Team Battle Rooms</h3>
+                    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Compete in private, acoustically treated rooms with side-by-side PCs, perfect for scrims, tournament brackets, and team strategy.
+                    </p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-primary/20 hover:border-primary/50">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="assets/Streaming Booth" 
+                         alt="Streaming Booth" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-4 left-4 bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center border border-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-headset text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white group-hover:text-primary transition-colors">Streaming Booths</h3>
+                    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Go live like a pro. Soundproof booths equipped with high-end cameras, microphones, lighting, and specialized streaming software.
+                    </p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-800 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-primary/20 hover:border-primary/50">
+                <div class="h-60 overflow-hidden relative">
+                    <img src="assets/Chill Zone and Snacks" 
+                         alt="Chill Zone and Snacks" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-4 left-4 bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center border border-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-couch text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-black uppercase italic dark:text-white group-hover:text-primary transition-colors">Chill Zone</h3>
+                    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Recharge between matches. Relax in comfortable seating, grab essential snacks, and refuel with energy drinks and refreshments.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-900 transition-colors duration-300" 
+         x-data="{ 
+            annual: false,
+            plans: {
+                casual: { monthly: 15, yearly: 120 },
+                pro: { monthly: 45, yearly: 400 },
+                elite: { monthly: 85, yearly: 800 }
+            }
+         }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                Choose Your <span class="text-primary ">Power Level</span>
+            </h2>
+            
+            <div class="mt-8 flex items-center justify-center gap-4">
+                <span class="text-sm font-bold" :class="!annual ? 'text-primary' : 'text-slate-400'">Monthly</span>
+                <button @click="annual = !annual" 
+                        class="relative w-16 h-8 rounded-full bg-slate-200 dark:bg-slate-800 transition-colors focus:outline-none">
+                    <div class="absolute top-1 left-1 w-6 h-6 rounded-full bg-primary transition-transform duration-300 shadow-lg"
+                         :class="annual ? 'translate-x-8' : 'translate-x-0'"></div>
+                </button>
+                <span class="text-sm font-bold" :class="annual ? 'text-primary' : 'text-slate-400'">
+                    Yearly <span class="ml-1 text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded-full uppercase">Save 20%</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
+            
+            <div class="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all duration-300 flex flex-col">
+                <h3 class="text-xl font-black uppercase italic dark:text-white">Casual</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Perfect for weekend warriors.</p>
+                
+                <div class="mt-6 mb-8">
+                    <span class="text-5xl font-black italic dark:text-white">$</span>
+                    <span class="text-6xl font-black italic dark:text-white transition-all duration-300" 
+                          x-text="annual ? plans.casual.yearly : plans.casual.monthly"></span>
+                    <span class="text-slate-400 font-bold" x-text="annual ? '/year' : '/mo'"></span>
+                </div>
+
+                <ul class="space-y-4 mb-10 flex-1">
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> 5 Hours Gaming / Day</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> Standard PC Access</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> Community Discord</li>
+                    <li class="flex items-center gap-3 text-sm text-slate-400 line-through"><i class="fa-solid fa-xmark"></i> Pro Coaching</li>
+                </ul>
+
+                <a href="#" class="w-full py-4 text-center border-2 border-primary text-primary font-black rounded-xl hover:bg-primary hover:text-white transition-all uppercase italic tracking-wider">Get Started</a>
+            </div>
+
+            <div class="group relative bg-white dark:bg-slate-900 p-8 rounded-3xl border-2 border-primary shadow-2xl shadow-primary/20 scale-105 z-10 flex flex-col">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest shadow-lg">Most Popular</div>
+                
+                <h3 class="text-xl font-black uppercase italic dark:text-white">Pro Grinder</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">For the aspiring professional.</p>
+                
+                <div class="mt-6 mb-8">
+                    <span class="text-5xl font-black italic text-primary">$</span>
+                    <span class="text-6xl font-black italic dark:text-white transition-all duration-300" 
+                          x-text="annual ? plans.pro.yearly : plans.pro.monthly"></span>
+                    <span class="text-slate-400 font-bold" x-text="annual ? '/year' : '/mo'"></span>
+                </div>
+
+                <ul class="space-y-4 mb-10 flex-1">
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> Unlimited Gaming</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> VIP Booth Access</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> 2 Monthly VOD Reviews</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> Tournament Discounts</li>
+                </ul>
+
+                <a href="#" class="w-full py-4 text-center bg-primary text-white font-black rounded-xl hover:bg-violet-600 transition-all uppercase italic tracking-wider shadow-lg shadow-primary/40 transform hover:scale-105 active:scale-95">Upgrade to Pro</a>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-all duration-300 flex flex-col">
+                <h3 class="text-xl font-black uppercase italic dark:text-white">Elite</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Maximum performance & tools.</p>
+                
+                <div class="mt-6 mb-8">
+                    <span class="text-5xl font-black italic dark:text-white">$</span>
+                    <span class="text-6xl font-black italic dark:text-white transition-all duration-300" 
+                          x-text="annual ? plans.elite.yearly : plans.elite.monthly"></span>
+                    <span class="text-slate-400 font-bold" x-text="annual ? '/year' : '/mo'"></span>
+                </div>
+
+                <ul class="space-y-4 mb-10 flex-1">
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> 24/7 Facility Access</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> Dedicated Team Room</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> 1-on-1 Pro Coaching</li>
+                    <li class="flex items-center gap-3 text-sm dark:text-slate-300"><i class="fa-solid fa-check text-primary"></i> Advanced Analytics Portal</li>
+                </ul>
+
+                <a href="#" class="w-full py-4 text-center border-2 border-primary text-primary font-black rounded-xl hover:bg-primary hover:text-white transition-all uppercase italic tracking-wider">Join the Elite</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-0"> <div class="text-center mb-12 px-4">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                Champion <span class="text-primary ">Verdicts</span>
+            </h2>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Hear from the pros who leveled up at Nexus.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-y border-slate-200 dark:border-slate-800">
+            
+            <div class="group relative bg-white dark:bg-slate-900 p-10 border-slate-200 dark:border-slate-800 border-b md:border-r transition-all duration-500 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:z-10">
+                <div class="absolute top-6 right-8 opacity-5 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-quote-right text-7xl text-primary"></i>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="flex gap-1 mb-6 text-yellow-500 text-xs">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed italic mb-8 text-base">
+                        "The latency here is non-existent. The 240Hz setups and dedicated fiber helped me shave off ms on my reaction time."
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="assets/t1" 
+                             alt="Alex" class="w-12 h-12 rounded-full object-cover border-2 border-primary group-hover:scale-110 transition-transform">
+                        <div>
+                            <h4 class="font-black italic uppercase dark:text-white text-sm">Alex "Vortex" Chen</h4>
+                            <p class="text-[10px] font-bold text-primary uppercase tracking-widest">Pro Valorant Player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-white dark:bg-slate-900 p-10 border-slate-200 dark:border-slate-800 border-b lg:border-r transition-all duration-500 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:z-10">
+                <div class="absolute top-6 right-8 opacity-5 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-quote-right text-7xl text-primary"></i>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="flex gap-1 mb-6 text-yellow-500 text-xs">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed italic mb-8 text-base">
+                        "1-on-1 coaching was a game changer. Dissecting VODs helped us win our first tournament. Community energy is unmatched!"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="assets/t2" 
+                             alt="Sarah" class="w-12 h-12 rounded-full object-cover border-2 border-primary group-hover:scale-110 transition-transform">
+                        <div>
+                            <h4 class="font-black italic uppercase dark:text-white text-sm">Sarah Jenkins</h4>
+                            <p class="text-[10px] font-bold text-primary uppercase tracking-widest">Team Captain (LFG)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-white dark:bg-slate-900 p-10 border-slate-200 dark:border-slate-800 border-b transition-all duration-500 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:z-10 md:col-span-2 lg:col-span-1">
+                <div class="absolute top-6 right-8 opacity-5 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-quote-right text-7xl text-primary"></i>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="flex gap-1 mb-6 text-yellow-500 text-xs">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed italic mb-8 text-base">
+                        "Dedicated booths mean my stream looks pro every time. Noise isolation is perfect, and the snacks are a huge plus!"
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <img src="assets/t3" 
+                             alt="Mike" class="w-12 h-12 rounded-full object-cover border-2 border-primary group-hover:scale-110 transition-transform">
+                        <div>
+                            <h4 class="font-black italic uppercase dark:text-white text-sm">Mike "Glitch" Ross</h4>
+                            <p class="text-[10px] font-bold text-primary uppercase tracking-widest">Content Creator</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-12 text-center px-4">
+            <a href="login.html" class="inline-flex items-center gap-2 font-black italic uppercase tracking-widest text-xs text-slate-400 hover:text-primary transition-colors group">
+                Join the Hall of Fame <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                Nexus <span class="text-primary ">In Action</span>
+            </h2>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Explore our high-octane environment where champions are forged and legends are made.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="group bg-white dark:bg-slate-900 p-3 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-500 hover:border-primary hover:shadow-primary/20 hover:-translate-y-2">
+                <div class="relative h-64 overflow-hidden rounded-2xl">
+                    <img src="assets/RGB Gaming Setup" 
+                         alt="RGB Gaming Setup" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white text-xs font-bold uppercase tracking-widest bg-primary px-3 py-1 rounded-md">View Setup</span>
+                    </div>
+                </div>
+                <div class="mt-4 px-2 pb-2">
+                    <h3 class="text-lg font-black uppercase italic dark:text-white">Battlestation Alpha</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">High-end RGB liquid-cooled rigs.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 p-3 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-500 hover:border-primary hover:shadow-primary/20 hover:-translate-y-2">
+                <div class="relative h-64 overflow-hidden rounded-2xl">
+                    <img src="assets/Esports Tournament" 
+                         alt="Esports Tournament" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white text-xs font-bold uppercase tracking-widest bg-primary px-3 py-1 rounded-md">View Event</span>
+                    </div>
+                </div>
+                <div class="mt-4 px-2 pb-2">
+                    <h3 class="text-lg font-black uppercase italic dark:text-white">Valorant Open '26</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Regional tournament finals live.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 p-3 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-500 hover:border-primary hover:shadow-primary/20 hover:-translate-y-2">
+                <div class="relative h-64 overflow-hidden rounded-2xl">
+                    <img src="assets/Team Training" 
+                         alt="Team Training" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white text-xs font-bold uppercase tracking-widest bg-primary px-3 py-1 rounded-md">View Room</span>
+                    </div>
+                </div>
+                <div class="mt-4 px-2 pb-2">
+                    <h3 class="text-lg font-black uppercase italic dark:text-white">VOD Review Room B</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Focused team analysis sessions.</p>
+                </div>
+            </div>
+
+            <div class="group bg-white dark:bg-slate-900 p-3 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-500 hover:border-primary hover:shadow-primary/20 hover:-translate-y-2">
+                <div class="relative h-64 overflow-hidden rounded-2xl">
+                    <img src="assets/Streaming Booth" 
+                         alt="Streaming Booth" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <span class="text-white text-xs font-bold uppercase tracking-widest bg-primary px-3 py-1 rounded-md">View Booth</span>
+                    </div>
+                </div>
+                <div class="mt-4 px-2 pb-2">
+                    <h3 class="text-lg font-black uppercase italic dark:text-white">Creator Booth 1</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Pro-grade soundproof setup.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-16 text-center">
+            <a href="gallery.html" class="inline-flex items-center gap-3 bg-primary hover:bg-violet-600 text-white px-10 py-4 rounded-full font-black uppercase italic tracking-wider transition-all transform hover:scale-105 shadow-xl shadow-primary/20 active:scale-95">
+                Explore Full Gallery <i class="fa-solid fa-camera-retro"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-900 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter italic">
+                Find the <span class="text-primary ">Nexus</span>
+            </h2>
+            <div class="w-20 h-1.5 bg-primary mt-4 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            
+            <div class="lg:col-span-7 group relative bg-slate-100 dark:bg-slate-800 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-700 min-h-[400px] shadow-2xl transition-all duration-500 hover:border-primary/50">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.014298755089!2d-122.4194155!3d37.7749295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809c6c8f4455%3A0x80a31d47cc47395c!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1647450000000!5m2!1sen!2sus" 
+                    class="absolute inset-0 w-full h-full grayscale-[0.5] contrast-[1.2] invert-[0.05] dark:invert-[0.9] dark:hue-rotate-180" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                
+                <div class="absolute top-6 left-6 bg-slate-900/80 backdrop-blur-md text-white px-5 py-3 rounded-2xl border border-white/10 flex items-center gap-3">
+                    <div class="w-3 h-3 bg-primary rounded-full animate-pulse shadow-[0_0_10px_#8b5cf6]"></div>
+                    <span class="text-xs font-black uppercase tracking-widest">Live Facility Status</span>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col gap-6">
+                
+                <div class="group bg-slate-50 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white group-hover:shadow-[0_0_15px_#8b5cf6] transition-all duration-500">
+                            <i class="fa-solid fa-train-subway text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase italic dark:text-white mb-3 tracking-tight">Nearby Transport</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <i class="fa-solid fa-circle-dot text-[8px] text-emerald-500"></i>
+                                    <strong class="text-slate-900 dark:text-slate-200">Central Station:</strong> 5 min walk
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <i class="fa-solid fa-bus text-xs text-emerald-500"></i>
+                                    <strong class="text-slate-900 dark:text-slate-200">Bus Loop:</strong> Route 402, 118
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group bg-slate-50 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:bg-white dark:hover:bg-slate-800 hover:shadow-xl hover:shadow-primary/5 hover:border-primary/30">
+                    <div class="flex items-start gap-5">
+                        <div class="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white group-hover:shadow-[0_0_15px_#8b5cf6] transition-all duration-500">
+                            <i class="fa-solid fa-car text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black uppercase italic dark:text-white mb-3 tracking-tight">Parking Access</h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <i class="fa-solid fa-car text-xs text-primary"></i>
+                                    <strong class="text-slate-900 dark:text-slate-200">On-Site:</strong> 50+ Slots Available
+                                </li>
+                                <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                    <i class="fa-solid fa-bicycle text-xs text-primary"></i>
+                                    <strong class="text-slate-900 dark:text-slate-200">Bicycle:</strong> Secure Indoor Racks
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://maps.google.com" target="_blank" class="group w-full py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-2xl font-black uppercase italic tracking-widest text-center transition-all hover:bg-primary dark:hover:bg-primary hover:text-white shadow-lg active:scale-[0.98] flex items-center justify-center gap-3">
+                    Get Directions 
+                    <i class="fa-solid fa-location-arrow group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="relative py-24 overflow-hidden transition-colors duration-300">
+    <div class="absolute inset-0 bg-slate-900 dark:bg-black">
+        <div class="absolute top-0 left-0 w-full h-full opacity-30">
+            <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary rounded-full blur-[120px] animate-pulse"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-violet-800 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-md">
+            <span class="text-xs font-black uppercase tracking-[0.3em] text-primary">Limited Slots Available</span>
+        </div>
+
+        <h2 class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase italic tracking-tighter leading-none mb-8">
+            Ready to <br class="hidden md:block"> 
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-violet-400">Dominate</span> The Game?
+        </h2>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-400 mb-12 leading-relaxed">
+            Don't just play—train. Join the Nexus community today and gain access to pro-grade gear, elite coaching, and the most competitive arena in the city.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+            <a href="booknow.html" 
+               class="group relative w-full sm:w-auto px-10 py-5 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-wider rounded-2xl transition-all transform hover:scale-105 active:scale-95 shadow-2xl shadow-primary/40 overflow-hidden">
+               <span class="relative z-10 flex items-center justify-center gap-2">
+                   Book Your Session <i class="fa-solid fa-bolt transition-transform group-hover:rotate-12"></i>
+               </span>
+               <div class="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-[-20deg]"></div>
+            </a>
+
+            <a href="login.html" 
+               class="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-white/20 hover:border-white text-white font-black uppercase italic tracking-wider rounded-2xl transition-all hover:bg-white/10 active:scale-95 flex items-center justify-center gap-2">
+               Join Tournament <i class="fa-solid fa-trophy text-sm"></i>
+            </a>
+        </div>
+
+        <p class="mt-10 text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center justify-center gap-2">
+            <i class="fa-solid fa-shield-halved text-primary"></i> 100% Secure Booking & Instant Confirmation
+        </p>
+    </div>
+</section>
+
+   <footer class="bg-slate-50 dark:bg-slate-950 pt-16 pb-8 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        
+        <div class="space-y-6">
+            <a href="index.html">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-10 w-auto rounded-lg shadow-lg shadow-primary/20">
+                <span class="text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+            </div>
+            </a>
+            
+            <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                The ultimate destination for competitive gamers. Top-tier hardware, community, and victory.
+            </p>
+            <div class="flex gap-4">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-twitch"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 grid grid-cols-2 gap-8">
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-sm tracking-widest text-slate-900 dark:text-white">Navigation</h4>
+                <ul class="space-y-4 text-slate-500 dark:text-slate-400">
+                    <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="home2.html" class="hover:text-primary transition-colors">Home 2</a></li>
+                    <li><a href="about.html" class="hover:text-primary transition-colors">About</a></li>
+                    <li><a href="service.html" class="hover:text-primary transition-colors">Service</a></li>
+                    <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-sm tracking-widest text-slate-900 dark:text-white">Resources</h4>
+                <ul class="space-y-4 text-slate-500 dark:text-slate-400">
+                    <li><a href="pricing.html" class="hover:text-primary transition-colors">Pricing</a></li>
+                    <li><a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a></li>
+                    <li><a href="booknow.html" class="hover:text-primary transition-colors text-primary font-bold">Book Now</a></li>
+                    <li><a href="404.html" class="hover:text-primary transition-colors">404 Page</a></li>
+                    <li><a href="comingsoon.html" class="hover:text-primary transition-colors">Coming Soon</a></li>
+                </ul>
+            </div>
+        </div>
+
+       <div class="bg-slate-100 dark:bg-slate-900 p-6 lg:p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 
+            md:col-span-3 lg:col-span-1 flex flex-col md:flex-row lg:flex-col md:items-center lg:items-start gap-6 lg:gap-4 transition-all duration-300">
+    
+    <div class="md:flex-1 lg:w-full">
+        <h4 class="font-black mb-2 uppercase text-sm tracking-[0.2em] text-slate-900 dark:text-white">
+            Newsletter
+        </h4>
+        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+            Get the latest tournament updates and gear drops.
+        </p>
+    </div>
+
+    <form class="flex flex-col md:flex-row lg:flex-col gap-3 md:flex-[1.5] lg:w-full">
+        <input type="email" placeholder="EMAIL ADDRESS" 
+               class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-xl text-xs font-black focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-slate-400">
+        
+        <button class="w-full md:w-auto lg:w-full bg-primary hover:bg-violet-600 text-white font-black py-3 px-8 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 uppercase text-[10px] tracking-[0.2em] whitespace-nowrap">
+            Subscribe
+        </button>
+    </form>
+</div>
+
+<style>
+    /* Global Typography Reset: Bold & No Italics */
+    * {
+        font-style: normal !important;
+    }
+</style>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-sm text-center">
+        <p>&copy; 2026 Nexus Esports Training Facility. All rights reserved.</p>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-primary">Privacy Policy</a>
+            <a href="#" class="hover:text-primary">Terms of Service</a>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        function appState() {
+            return {
+                mobileMenu: false,
+                darkMode: false,
+                dir: 'ltr',
+
+                initTheme() {
+                    if (localStorage.getItem('dark-mode') === 'true' || 
+                       (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        this.darkMode = true;
+                        document.documentElement.classList.add('dark');
+                    }
+                },
+
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('dark-mode', this.darkMode);
+                    if (this.darkMode) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                },
+
+                initDir() {
+                    const savedDir = localStorage.getItem('site-dir') || 'ltr';
+                    this.dir = savedDir;
+                    document.getElementById('html-tag').dir = savedDir;
+                },
+
+                toggleDir() {
+                    this.dir = this.dir === 'ltr' ? 'rtl' : 'ltr';
+                    localStorage.setItem('site-dir', this.dir);
+                    document.getElementById('html-tag').dir = this.dir;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

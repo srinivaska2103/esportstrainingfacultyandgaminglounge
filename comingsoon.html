@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://placehold.co/40x40/8b5cf6/ffffff?text=N">
+
+    <title>Coming Soon | Nexus Esports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .bg-grid {
+            background-size: 30px 30px;
+            background-image: linear-gradient(to right, rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors duration-300 min-h-screen flex flex-col bg-grid" 
+      x-data="uiControls()" 
+      x-init="initTheme(); initDir();">
+
+    <header class="p-6 flex justify-between items-center w-full max-w-7xl mx-auto relative z-20">
+        <a href="index.html" class="flex items-center gap-3 group">
+            <div class="bg-primary p-2 rounded-lg shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
+                <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-6 w-6">
+            </div>
+            <span class="text-xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </a>
+
+        <div class="flex items-center gap-3">
+            <button @click="toggleDir()" 
+                    class="text-[10px] font-black px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-all uppercase"
+                    x-text="dir === 'ltr' ? 'LTR' : 'RTL'">
+            </button>
+            <button @click="toggleDark()" 
+                    class="p-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:shadow-md transition-all">
+                <i x-show="!darkMode" class="fa-solid fa-moon text-slate-600"></i>
+                <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-6 py-12 relative z-10">
+        <div class="max-w-3xl w-full text-center">
+            
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-[0.2em]">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                System Loading
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-6 leading-tight">
+                New Arena <br> <span class="text-primary text-glow">Under Construction</span>
+            </h1>
+            
+            <p class="text-slate-500 dark:text-slate-400 max-w-lg mx-auto text-lg mb-12">
+                We are calibrating the servers and polishing the rigs. Something massive is coming to the esports world.
+            </p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-16" x-data="timer('2026-06-01T00:00:00')">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-xl">
+                    <div class="text-4xl md:text-5xl font-black italic text-primary" x-text="days">00</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Days</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-xl">
+                    <div class="text-4xl md:text-5xl font-black italic text-primary" x-text="hours">00</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Hours</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-xl">
+                    <div class="text-4xl md:text-5xl font-black italic text-primary" x-text="minutes">00</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Mins</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-xl">
+                    <div class="text-4xl md:text-5xl font-black italic text-primary" x-text="seconds">00</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Secs</div>
+                </div>
+            </div>
+
+            <div class="max-w-md mx-auto">
+                <form class="flex flex-col sm:flex-row gap-3 p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl">
+                    <input type="email" placeholder="Enter your email" required
+                           class="flex-grow px-6 py-4 bg-transparent outline-none text-sm dark:text-white">
+                    <button type="submit" class="bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest px-8 py-4 rounded-xl transition-all active:scale-95 whitespace-nowrap">
+                        Notify Me
+                    </button>
+                </form>
+                <p class="mt-4 text-[10px] text-slate-400 font-bold uppercase tracking-widest">Be the first to get the access key.</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="p-8 flex justify-center gap-8 text-slate-400 relative z-20">
+        <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-twitch text-xl"></i></a>
+        <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-discord text-xl"></i></a>
+        <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-x-twitter text-xl"></i></a>
+        <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+    </div>
+
+    <script>
+        function uiControls() {
+            return {
+                darkMode: false,
+                dir: 'ltr',
+                initTheme() {
+                    if (localStorage.getItem('dark-mode') === 'true' || (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        this.darkMode = true;
+                        document.documentElement.classList.add('dark');
+                    }
+                },
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('dark-mode', this.darkMode);
+                    this.darkMode ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark');
+                },
+                initDir() {
+                    this.dir = localStorage.getItem('site-dir') || 'ltr';
+                    document.getElementById('html-tag').dir = this.dir;
+                },
+                toggleDir() {
+                    this.dir = this.dir === 'ltr' ? 'rtl' : 'ltr';
+                    localStorage.setItem('site-dir', this.dir);
+                    document.getElementById('html-tag').dir = this.dir;
+                }
+            }
+        }
+
+        function timer(expiry) {
+            return {
+                days: '00', hours: '00', minutes: '00', seconds: '00',
+                init() {
+                    const end = new Date(expiry).getTime();
+                    setInterval(() => {
+                        let now = new Date().getTime();
+                        let d = end - now;
+                        this.days = Math.floor(d / (1000 * 60 * 60 * 24));
+                        this.hours = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        this.minutes = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+                        this.seconds = Math.floor((d % (1000 * 60)) / 1000);
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

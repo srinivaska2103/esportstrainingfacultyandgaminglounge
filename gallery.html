@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://placehold.co/40x40/8b5cf6/ffffff?text=N">
+
+    <title>Nexus Esports | Train Like a Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        .hero-video-overlay {
+            background: linear-gradient(0deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 100%);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8b5cf6', // Violet 500
+                        secondary: '#10b981', // Emerald 500
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300" 
+      x-data="appState()" 
+      x-init="initTheme(); initDir();">
+
+     <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-20 items-center">
+        <a href="index.html">
+            <div class="flex-shrink-0 flex items-center gap-2 lg:gap-3">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
+            <span class="text-xl lg:text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+        </div>
+        </a>
+        
+
+       <div class="hidden lg:flex items-center space-x-4 xl:space-x-6" 
+     x-data="{ 
+        active(path) { 
+            const current = window.location.pathname;
+            // Matches if current path ends with the href or is the root
+            return current.endsWith(path) || (path === 'index.html' && (current === '/' || current === ''));
+        } 
+     }">
+    
+    <a href="index.html" 
+       :class="active('index.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Home
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('index.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="home2.html" 
+       :class="active('home2.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Home 2
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('home2.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="about.html" 
+       :class="active('about.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        About
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('about.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="service.html" 
+       :class="active('service.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Service
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('service.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <a href="contact.html" 
+       :class="active('contact.html') ? 'text-primary font-bold' : 'hover:text-primary font-medium'"
+       class="relative text-sm xl:text-base transition-colors group">
+        Contact
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300" :class="active('contact.html') ? 'w-full' : 'group-hover:w-full'"></span>
+    </a>
+
+    <div class="relative" x-data="{ open: false }">
+        <button @click="open = !open" 
+                :class="active('user.html') ? 'text-primary' : ''"
+                class="flex items-center gap-1 hover:text-primary font-medium text-sm xl:text-base focus:outline-none">
+            Dashboard <i class="fa-solid fa-chevron-down text-[10px] transition-transform" :class="open ? 'rotate-180' : ''"></i>
+        </button>
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-100"
+             x-transition:enter-start="transform opacity-0 scale-95"
+             x-transition:enter-end="transform opacity-100 scale-100"
+             @click.away="open = false" 
+             x-cloak 
+             class="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-100 dark:border-slate-700 py-2 z-[60]">
+            <a href="user.html" 
+               :class="active('user.html') ? 'bg-slate-100 dark:bg-slate-700 text-primary' : ''"
+               class="block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700">Profile</a>
+        </div>
+    </div>
+</div>
+
+        <div class="hidden lg:flex items-center space-x-3 xl:space-x-4 border-l border-slate-200 dark:border-slate-700 pl-4 xl:pl-6">
+            <div class="flex items-center gap-1">
+                <button @click="toggleDark()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i x-show="!darkMode" class="fa-solid fa-moon"></i>
+                    <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+                </button>
+                <button @click="toggleDir()" class="text-[10px] font-black px-1.5 py-0.5 border border-slate-400 rounded hover:bg-slate-100 dark:hover:bg-slate-800 uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
+            </div>
+            
+            <a href="login.html" class="text-primary hover:text-white hover:bg-primary border border-primary px-4 py-1.5 rounded-full text-sm font-bold transition-all transform hover:scale-105">Login</a>
+            <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105">Book Now</a>
+        </div>
+
+        <div class="lg:hidden flex items-center gap-4">
+            <button @click="mobileMenu = !mobileMenu" class="text-2xl focus:outline-none p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                <i class="fa-solid" :class="mobileMenu ? 'fa-xmark' : 'fa-bars'"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <div x-show="mobileMenu" 
+     x-cloak 
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0 -translate-y-4"
+     x-transition:enter-end="opacity-100 translate-y-0"
+     x-data="{ 
+        active(path) { 
+            const current = window.location.pathname;
+            return current.endsWith(path) || (path === 'index.html' && (current === '/' || current === ''));
+        } 
+     }"
+     class="lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-6 space-y-4 shadow-xl">
+    
+    <a href="index.html" 
+       :class="active('index.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Home</a>
+    
+    <a href="home2.html" 
+       :class="active('home2.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Home 2</a>
+    
+    <a href="about.html" 
+       :class="active('about.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">About</a>
+    
+    <a href="service.html" 
+       :class="active('service.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Service</a>
+    
+    <a href="contact.html" 
+       :class="active('contact.html') ? 'text-primary bg-primary/5 border-l-4 border-primary pl-3' : 'text-slate-600 dark:text-slate-300'"
+       class="block text-lg font-bold py-2 transition-all">Contact</a>
+    
+    <div x-data="{ open: false }">
+        <button @click="open = !open" 
+                :class="active('user.html') ? 'text-primary' : 'text-slate-600 dark:text-slate-300'"
+                class="flex justify-between items-center w-full text-lg font-bold py-2">
+            User Dashboards <i class="fa-solid fa-chevron-down text-sm transition-transform" :class="open ? 'rotate-180' : ''"></i>
+        </button>
+        <div x-show="open" x-cloak class="pl-4 mt-2 space-y-3 border-l border-slate-200 dark:border-slate-800">
+            <a href="user.html" 
+               :class="active('user.html') ? 'text-primary font-bold' : 'text-slate-500'"
+               class="block text-base">Profile</a>
+        </div>
+    </div>
+
+    <hr class="border-slate-200 dark:border-slate-800 my-4">
+    
+    <div class="flex items-center justify-between py-2">
+        <span class="text-sm font-bold uppercase tracking-wider text-slate-400">Settings</span>
+        <div class="flex gap-3">
+            <button @click="toggleDark()" class="w-12 h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl transition-colors">
+                <i x-show="!darkMode" class="fa-solid fa-moon"></i>
+                <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+            </button>
+            <button @click="toggleDir()" class="px-4 h-12 bg-slate-100 dark:bg-slate-800 rounded-xl font-black text-xs uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-3 pt-2">
+        <a href="login.html" 
+           class="block w-full text-center border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-white transition-all">
+           Login
+        </a>
+        <a href="booknow.html" 
+           class="block w-full text-center bg-primary text-white py-4 rounded-xl font-black shadow-lg shadow-primary/30 active:scale-95 transition-all">
+           BOOK NOW
+        </a>
+    </div>
+</div>
+    </nav>
+<section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-slate-900">
+    
+    <div class="absolute inset-0 z-0">
+        <img src="assets/consolegaming" 
+             class="w-full h-full object-cover opacity-60 scale-105 animate-[pulse_10s_ease-in-out_infinite]" 
+             alt="Gaming Arena Setup">
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-transparent to-slate-950"></div>
+    </div>
+
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 text-center">
+        
+        <div class="inline-flex items-center gap-3 px-4 py-2 mb-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl animate-bounce">
+            <i class="fa-solid fa-camera-retro text-primary"></i>
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-white italic">Gallery Experience</span>
+        </div>
+
+        <h1 class="text-6xl md:text-8xl lg:text-9xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
+            Inside the <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-violet-400 to-primary bg-[length:200%_auto] animate-gradient ">Arena</span>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-2xl text-slate-300 font-medium leading-relaxed mb-12">
+            Experience the raw energy, the pro-grade hardware, and the heat of live competition through our lens.
+        </p>
+
+        <div class="flex flex-col items-center gap-4">
+            <div class="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent"></div>
+            <span class="text-[10px] font-black uppercase tracking-[0.5em] text-primary animate-pulse">Scroll to View</span>
+        </div>
+    </div>
+
+   
+</section>
+
+<style>
+    /* Gradient Text Animation */
+    @keyframes gradientShift {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+    .animate-gradient {
+        animation: gradientShift 3s linear infinite;
+    }
+    .text-glow {
+        filter: drop-shadow(0 0 20px rgba(139,92,246,0.6));
+    }
+</style>
+<section class="py-24 bg-white dark:bg-slate-950 transition-colors duration-300" 
+         x-data="{ 
+            filter: 'all',
+            showLightbox: false,
+            activeImg: '',
+            items: [
+                { id: 1, cat: 'setups', img: 'assets/Pro Station 01', title: 'Pro Station 01' },
+                { id: 2, cat: 'tournaments', img: 'assets/Global Qualifiers', title: 'Global Qualifiers' },
+                { id: 3, cat: 'training', img: 'assets/Team VOD Room', title: 'Team VOD Room' },
+                { id: 4, cat: 'booths', img: 'assets/Creator Suite', title: 'Creator Suite' },
+                { id: 5, cat: 'events', img: 'assets/Launch Party', title: 'Launch Party' },
+                { id: 6, cat: 'setups', img: 'assets/RGB Command', title: 'RGB Command' }
+            ]
+         }">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-wrap justify-center gap-3 mb-16">
+            <template x-for="cat in ['all', 'setups', 'tournaments', 'training', 'booths', 'events']">
+                <button @click="filter = cat" 
+                        :class="filter === cat ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-100 dark:bg-slate-900 text-slate-500 hover:text-primary'"
+                        class="px-6 py-2.5 rounded-xl font-black uppercase italic text-[10px] tracking-widest transition-all duration-300 border border-transparent"
+                        x-text="cat === 'all' ? '🎯 Show All' : cat.charAt(0).toUpperCase() + cat.slice(1)">
+                </button>
+            </template>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 overflow-hidden rounded-[2.5rem] border border-slate-200 dark:border-slate-800">
+            <template x-for="item in items" :key="item.id">
+                <div x-show="filter === 'all' || filter === item.cat"
+                     x-transition:enter="transition ease-out duration-500"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     class="group relative h-80 cursor-pointer overflow-hidden border-slate-200 dark:border-slate-800 sm:border"
+                     @click="activeImg = item.img; showLightbox = true">
+                    
+                    <img :src="item.img + '?q=80&w=800&auto=format&fit=crop'" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                         :alt="item.title">
+                    
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                    <div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-slate-950/80 via-transparent to-transparent translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <span class="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-1" x-text="item.cat"></span>
+                        <h4 class="text-xl font-black text-white uppercase italic tracking-tight" x-text="item.title"></h4>
+                    </div>
+
+                    <div class="absolute top-6 right-6 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fa-solid fa-expand text-sm"></i>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <div x-show="showLightbox" 
+         x-cloak
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-slate-950/95 backdrop-blur-xl"
+         @keydown.escape.window="showLightbox = false">
+        
+        <button @click="showLightbox = false" class="absolute top-8 right-8 text-white text-3xl hover:text-primary transition-colors">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <img :src="activeImg + '?q=90&w=1200&auto=format&fit=crop'" 
+             class="max-w-full max-h-full rounded-2xl shadow-2xl border border-white/10"
+             @click.away="showLightbox = false">
+    </div>
+</section>
+<section class="py-24 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row items-end justify-between gap-6 mb-16">
+            <div class="max-w-xl text-center md:text-left">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+                    Community <span class="text-primary ">Spotlight</span>
+                </h2>
+                <p class="mt-4 text-slate-500 dark:text-slate-400 font-medium">
+                    The heart of the arena. Real players, real moments, real competition.
+                </p>
+            </div>
+            <div class="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Live Community Feed</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="group relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                <img src="assets/Gamer in Action" 
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Gamer in Action">
+                
+                <div class="absolute top-6 left-6 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden bg-slate-900">
+                        <img src="assets/av1" alt="Avatar">
+                    </div>
+                    <div class="bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
+                        <span class="text-xs font-black text-white italic uppercase tracking-tighter">@ShadowBlade_99</span>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span class="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-2">Gamers in Action</span>
+                    <p class="text-white text-sm font-bold leading-relaxed">"Clutched the 1v4 in the final round of the weekly open. The atmosphere here is insane!"</p>
+                </div>
+            </div>
+
+            <div class="group relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                <img src="assets/Team Battle Room" 
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Team Training">
+                
+                <div class="absolute top-6 left-6 flex items-center gap-3">
+                    <div class="bg-primary text-white px-3 py-1 rounded-lg border border-white/10 shadow-lg">
+                        <span class="text-xs font-black italic uppercase tracking-tighter">Team: VEXA_ELITE</span>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span class="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-2">Team Collaboration</span>
+                    <p class="text-white text-sm font-bold leading-relaxed">Strategy meeting before the Pro-Circuit qualifiers. Teamwork makes the dream work.</p>
+                </div>
+            </div>
+
+            <div class="group relative aspect-[4/5] md:aspect-auto md:h-[400px] lg:h-auto lg:aspect-[4/5] md:col-span-2 lg:col-span-1 overflow-hidden rounded-[2.5rem] bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+                <img src="assets/Friendly Competitions" 
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Friendly Match">
+                
+                <div class="absolute top-6 left-6 flex items-center gap-3">
+                    <div class="bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
+                        <span class="text-xs font-black text-white italic uppercase tracking-tighter">Casual Lobby #4</span>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 p-8 flex flex-col justify-end bg-gradient-to-t from-slate-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span class="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-2">Friendly Matches</span>
+                    <p class="text-white text-sm font-bold leading-relaxed">An intense friendly 1v1 match between @GhostOps and @StormCaster. Respect to both!</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-16 text-center">
+            <button class="px-10 py-5 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest rounded-2xl shadow-xl shadow-primary/30 transition-all transform active:scale-95 flex items-center justify-center gap-3 mx-auto">
+                Join the Community <i class="fa-brands fa-discord"></i>
+            </button>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+                Arena <span class="text-primary >Social Feed</span>
+            </h2>
+            <p class="mt-4 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs">
+                Tag us to get featured & win weekly gaming credits
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary">
+                <div class="aspect-square overflow-hidden relative">
+                    <img src="assets/e1" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Instagram Post">
+                    
+                    <div class="absolute inset-0 bg-slate-950/60 flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-heart text-primary"></i> 1.2k</span>
+                        <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-comment text-primary"></i> 84</span>
+                    </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center"><i class="fa-brands fa-instagram text-[10px] text-primary"></i></div>
+                        <span class="text-[10px] font-black uppercase tracking-tighter dark:text-white">@NexLevel_Gaming</span>
+                    </div>
+                    <i class="fa-solid fa-ellipsis text-slate-400"></i>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary">
+                <div class="aspect-square overflow-hidden relative">
+                    <img src="assets/e2" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Instagram Post">
+                    <div class="absolute inset-0 bg-slate-950/60 flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-heart text-primary"></i> 890</span>
+                        <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-comment text-primary"></i> 42</span>
+                    </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center"><i class="fa-brands fa-instagram text-[10px] text-primary"></i></div>
+                        <span class="text-[10px] font-black uppercase tracking-tighter dark:text-white">@Arena_Vibes</span>
+                    </div>
+                    <i class="fa-solid fa-ellipsis text-slate-400"></i>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary md:col-span-2 lg:col-span-1">
+                <div class="aspect-square overflow-hidden relative">
+                    <img src="assets/e3" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Instagram Post">
+                    <div class="absolute inset-0 bg-slate-950/60 flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-heart text-primary"></i> 2.5k</span>
+                        <span class="text-white font-black flex items-center gap-2"><i class="fa-solid fa-comment text-primary"></i> 110</span>
+                    </div>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center"><i class="fa-brands fa-instagram text-[10px] text-primary"></i></div>
+                        <span class="text-[10px] font-black uppercase tracking-tighter dark:text-white">@Esports_Daily</span>
+                    </div>
+                    <i class="fa-solid fa-ellipsis text-slate-400"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-20 p-8 md:p-12 rounded-[2.5rem] bg-slate-900 text-center relative overflow-hidden group">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/20 rounded-full blur-[80px] group-hover:bg-primary/30 transition-all"></div>
+            
+            <div class="relative z-10">
+                <h3 class="text-2xl md:text-4xl font-black text-white uppercase italic tracking-tighter mb-4">
+                    Share your gaming moments with <span class="text-primary">#NexusArena</span>
+                </h3>
+                <p class="text-slate-400 text-sm md:text-base mb-8 max-w-xl mx-auto">
+                    Join the conversation and show the world your battlestation or tournament wins.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="px-8 py-4 bg-primary text-white font-black uppercase italic text-xs tracking-widest rounded-xl hover:bg-violet-600 transition-all shadow-lg shadow-primary/20 active:scale-95 flex items-center gap-2">
+                        <i class="fa-brands fa-instagram"></i> Follow on Instagram
+                    </button>
+                    <button class="px-8 py-4 bg-white/5 border border-white/10 text-white font-black uppercase italic text-xs tracking-widest rounded-xl hover:bg-white/10 transition-all active:scale-95 flex items-center gap-2">
+                        <i class="fa-solid fa-camera"></i> Tag Your Moments
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-24 bg-white dark:bg-slate-950 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase italic tracking-tighter">
+                Explore The <span class="text-primary ">Zones</span>
+            </h2>
+            <p class="mt-4 text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto">
+                From high-stakes competitive play to relaxed social lounging—every square inch is built for gamers.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[3rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="aspect-video overflow-hidden relative">
+                    <img src="assets/sologamingpod" 
+                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="PC Gaming Zone">
+                    <div class="absolute top-6 left-6 px-4 py-2 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl">
+                        High-Performance
+                    </div>
+                </div>
+                <div class="p-8 md:p-10">
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic mb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-desktop text-primary"></i> PC Gaming Zone
+                    </h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                        50+ Pro-tier stations featuring RTX 4080s, 240Hz monitors, and ergonomic Secretlab seating. Optimized for zero-latency competitive play.
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">240Hz</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">Fiber LAN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[3rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="aspect-video overflow-hidden relative">
+                    <img src="assets/consolegaming" 
+                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Console Lounge">
+                    <div class="absolute top-6 left-6 px-4 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl">
+                        Social & Play
+                    </div>
+                </div>
+                <div class="p-8 md:p-10">
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic mb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-gamepad text-blue-600"></i> Console Lounge
+                    </h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                        Latest PS5 and Xbox Series X setups with 4K OLED screens and comfortable oversized couches. Perfect for FIFA tournaments and casual co-op.
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">4K OLED</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">Next-Gen</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[3rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="aspect-video overflow-hidden relative">
+                    <img src="assets/Streaming Booth" 
+                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Streaming Rooms">
+                    <div class="absolute top-6 left-6 px-4 py-2 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl">
+                        Creator Ready
+                    </div>
+                </div>
+                <div class="p-8 md:p-10">
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic mb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-video text-red-600"></i> Streaming Rooms
+                    </h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                        Soundproof private booths equipped with dual-PC setups, Shure microphones, and DSLR cameras. Go live with professional quality.
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">Soundproof</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">Dual-PC</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative bg-slate-50 dark:bg-slate-900 rounded-[3rem] overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:border-primary/50">
+                <div class="aspect-video overflow-hidden relative">
+                    <img src="assets/Chill Zone and Snacks" 
+                         class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Chill Area">
+                    <div class="absolute top-6 left-6 px-4 py-2 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-xl">
+                        Recharge
+                    </div>
+                </div>
+                <div class="p-8 md:p-10">
+                    <h3 class="text-3xl font-black text-slate-900 dark:text-white uppercase italic mb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-mug-hot text-emerald-500"></i> Chill And Snacks Area
+                    </h3>
+                    <p class="text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+                        Need a break? Grab a snack or energy drink at our cafe. High-speed Wi-Fi and power outlets make this a great spot for mobile gaming.
+                    </p>
+                    <div class="flex gap-4">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">Free WiFi</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">Cafe</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<section class="relative py-24 md:py-32 bg-slate-950 overflow-hidden border-t border-white/5">
+    
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] opacity-60"></div>
+        <div class="absolute inset-0 opacity-[0.05]" 
+             style="background-image: radial-gradient(#8b5cf6 1px, transparent 1px); background-size: 30px 30px;">
+        </div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+            <span class="w-1.5 h-1.5 bg-primary rounded-full animate-ping"></span>
+            <span class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 italic">Stations Available Now</span>
+        </div>
+
+        <h2 class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase italic tracking-tighter leading-[0.85] mb-8">
+            Ready to <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-violet-400 to-primary bg-[length:200%_auto] animate-gradient ">Experience</span> It Yourself?
+        </h2>
+
+        <p class="max-w-xl mx-auto text-lg text-slate-400 mb-12 font-medium leading-relaxed">
+            Don't just look at the setup—get behind the monitors. Your pro-grade station is prepped and waiting.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
+            <a href="booknow.html" 
+               class="group relative w-full sm:w-auto px-12 py-5 bg-primary hover:bg-violet-600 text-white font-black uppercase italic tracking-widest rounded-2xl shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all transform hover:scale-105 active:scale-95 flex items-center justify-center gap-3 overflow-hidden">
+               <span class="relative z-10">🎮 Book Your Session</span>
+               <div class="absolute inset-0 w-full h-full bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-[-20deg]"></div>
+            </a>
+
+            <a href="comingsoon.html" 
+               class="w-full sm:w-auto px-12 py-5 bg-transparent border-2 border-white/20 hover:border-white text-white font-black uppercase italic tracking-widest rounded-2xl transition-all hover:bg-white/10 active:scale-95 flex items-center justify-center gap-3">
+               🏆 Join a Tournament
+            </a>
+        </div>
+
+        <div class="mt-16 flex items-center justify-center gap-8 opacity-30 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
+             <i class="fa-brands fa-nvidia text-3xl"></i>
+             <i class="fa-brands fa-playstation text-3xl"></i>
+             <i class="fa-brands fa-xbox text-3xl"></i>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Continuous Text Glow Animation */
+    @keyframes gradientShift {
+        0% { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+    .animate-gradient {
+        animation: gradientShift 3s linear infinite;
+    }
+    .text-glow {
+        filter: drop-shadow(0 0 15px rgba(139,92,246,0.5));
+    }
+</style>
+
+ <footer class="bg-slate-50 dark:bg-slate-950 pt-16 pb-8 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        
+        <div class="space-y-6">
+            <a href="index.html">
+                <div class="flex-shrink-0 flex items-center gap-3">
+                <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-10 w-auto rounded-lg shadow-lg shadow-primary/20">
+                <span class="text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+            </div>
+            </a>
+            
+            <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
+                The ultimate destination for competitive gamers. Top-tier hardware, community, and victory.
+            </p>
+            <div class="flex gap-4">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-twitch"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 grid grid-cols-2 gap-8">
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-sm tracking-widest text-slate-900 dark:text-white">Navigation</h4>
+                <ul class="space-y-4 text-slate-500 dark:text-slate-400">
+                    <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="home2.html" class="hover:text-primary transition-colors">Home 2</a></li>
+                    <li><a href="about.html" class="hover:text-primary transition-colors">About</a></li>
+                    <li><a href="service.html" class="hover:text-primary transition-colors">Service</a></li>
+                    <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 uppercase text-sm tracking-widest text-slate-900 dark:text-white">Resources</h4>
+                <ul class="space-y-4 text-slate-500 dark:text-slate-400">
+                    <li><a href="pricing.html" class="hover:text-primary transition-colors">Pricing</a></li>
+                    <li><a href="gallery.html" class="hover:text-primary transition-colors">Gallery</a></li>
+                    <li><a href="booknow.html" class="hover:text-primary transition-colors text-primary font-bold">Book Now</a></li>
+                    <li><a href="404.html" class="hover:text-primary transition-colors">404 Page</a></li>
+                    <li><a href="comingsoon.html" class="hover:text-primary transition-colors">Coming Soon</a></li>
+                </ul>
+            </div>
+        </div>
+
+       <div class="bg-slate-100 dark:bg-slate-900 p-6 lg:p-8 rounded-[2rem] border border-slate-200 dark:border-slate-800 
+            md:col-span-3 lg:col-span-1 flex flex-col md:flex-row lg:flex-col md:items-center lg:items-start gap-6 lg:gap-4 transition-all duration-300">
+    
+    <div class="md:flex-1 lg:w-full">
+        <h4 class="font-black mb-2 uppercase text-sm tracking-[0.2em] text-slate-900 dark:text-white">
+            Newsletter
+        </h4>
+        <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tight">
+            Get the latest tournament updates and gear drops.
+        </p>
+    </div>
+
+    <form class="flex flex-col md:flex-row lg:flex-col gap-3 md:flex-[1.5] lg:w-full">
+        <input type="email" placeholder="EMAIL ADDRESS" 
+               class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-xl text-xs font-black focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-slate-400">
+        
+        <button class="w-full md:w-auto lg:w-full bg-primary hover:bg-violet-600 text-white font-black py-3 px-8 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-95 uppercase text-[10px] tracking-[0.2em] whitespace-nowrap">
+            Subscribe
+        </button>
+    </form>
+</div>
+
+<style>
+    /* Global Typography Reset: Bold & No Italics */
+    * {
+        font-style: normal !important;
+    }
+</style>
+
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400 text-sm text-center">
+        <p>&copy; 2026 Nexus Esports Training Facility. All rights reserved.</p>
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-primary">Privacy Policy</a>
+            <a href="#" class="hover:text-primary">Terms of Service</a>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        function appState() {
+            return {
+                mobileMenu: false,
+                darkMode: false,
+                dir: 'ltr',
+
+                initTheme() {
+                    if (localStorage.getItem('dark-mode') === 'true' || 
+                       (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        this.darkMode = true;
+                        document.documentElement.classList.add('dark');
+                    }
+                },
+
+                toggleDark() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('dark-mode', this.darkMode);
+                    if (this.darkMode) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                    }
+                },
+
+                initDir() {
+                    const savedDir = localStorage.getItem('site-dir') || 'ltr';
+                    this.dir = savedDir;
+                    document.getElementById('html-tag').dir = savedDir;
+                },
+
+                toggleDir() {
+                    this.dir = this.dir === 'ltr' ? 'rtl' : 'ltr';
+                    localStorage.setItem('site-dir', this.dir);
+                    document.getElementById('html-tag').dir = this.dir;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
