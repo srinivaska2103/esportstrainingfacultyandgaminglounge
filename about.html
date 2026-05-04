@@ -36,13 +36,13 @@
       x-data="appState()" 
       x-init="initTheme(); initDir();">
 
-    <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-20 items-center">
         <a href="index.html">
             <div class="flex-shrink-0 flex items-center gap-2 lg:gap-3">
             <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
-            <span class="text-xl lg:text-2xl font-black italic tracking-tighter text-primary">NEXUS</span>
+            <span class="text-xl lg:text-2xl font-semibold  tracking-tighter text-primary">NEXUS</span>
         </div>
         </a>
         
@@ -112,13 +112,27 @@
 </div>
 
         <div class="hidden lg:flex items-center space-x-3 xl:space-x-4 border-l border-slate-200 dark:border-slate-700 pl-4 xl:pl-6">
-            <div class="flex items-center gap-1">
-                <button @click="toggleDark()" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                    <i x-show="!darkMode" class="fa-solid fa-moon"></i>
-                    <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
-                </button>
-                <button @click="toggleDir()" class="text-[10px] font-black px-1.5 py-0.5 border border-slate-400 rounded hover:bg-slate-100 dark:hover:bg-slate-800 uppercase" x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></button>
-            </div>
+            <div class="flex items-center gap-2">
+    <button @click="toggleDark()" 
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 group shadow-sm">
+        <i x-show="!darkMode" class="fa-solid fa-moon text-slate-500 group-hover:text-primary"></i>
+        <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+    </button>
+
+    <button @click="toggleDir()" 
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 shadow-sm"
+            style="font-style: normal !important;">
+        <span class="text-[10px] font-black uppercase tracking-tighter text-slate-500 dark:text-slate-400" 
+              x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></span>
+    </button>
+</div>
+
+<style>
+    /* Global Brand Enforcer: No Italics */
+    button, span, i {
+        font-style: normal !important;
+    }
+</style>
             
             <a href="login.html" class="text-primary hover:text-white hover:bg-primary border border-primary px-4 py-1.5 rounded-full text-sm font-bold transition-all transform hover:scale-105">Login</a>
             <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105">Book Now</a>
@@ -202,7 +216,7 @@
         </a>
     </div>
 </div>
-    </nav>
+    </nav> 
 <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-slate-950">
     
     <div class="absolute inset-0 z-0">
@@ -302,7 +316,7 @@
                     <span class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">The Origin Story</span>
                 </div>
 
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter leading-none mb-8">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 dark:text-white uppercase tracking-tighter leading-none mb-8">
                     Built by Gamers, <br>
                     <span class="text-primary">For the Future</span>
                 </h2>
@@ -369,7 +383,7 @@
                         <span class="text-xs font-black uppercase tracking-[0.4em] text-primary group-hover:text-white transition-colors">The Mission</span>
                     </div>
 
-                    <h3 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter mb-6 group-hover:text-white transition-colors">
+                    <h3 class="text-4xl md:text-5xl font-semibold text-slate-900 dark:text-white uppercase tracking-tighter mb-6 group-hover:text-white transition-colors">
                         Empower <br>Every Gamer
                     </h3>
                     
@@ -392,7 +406,7 @@
                         <span class="text-xs font-black uppercase tracking-[0.4em] text-slate-400 group-hover:text-white transition-colors">The Vision</span>
                     </div>
 
-                    <h3 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-6">
+                    <h3 class="text-4xl md:text-5xl font-semibold text-white uppercase tracking-tighter mb-6">
                         Leading the <br>Esports Era
                     </h3>
                     
@@ -424,7 +438,7 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-24">
             
             <div class="group p-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 text-center hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl shadow-slate-200/50 dark:shadow-none">
-                <div class="text-4xl lg:text-5xl font-black text-primary mb-2">100+</div>
+                <div class="text-4xl lg:text-5xl font-semibold text-primary mb-2">100+</div>
                 <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Tournaments Hosted</p>
                 <div class="mt-4 flex justify-center gap-1">
                     <div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
@@ -434,7 +448,7 @@
             </div>
 
             <div class="group p-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 text-center hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl shadow-slate-200/50 dark:shadow-none">
-                <div class="text-4xl lg:text-5xl font-black text-primary mb-2">500+</div>
+                <div class="text-4xl lg:text-5xl font-semibold text-primary mb-2">500+</div>
                 <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Active Members</p>
                 <div class="mt-4 flex justify-center gap-1">
                     <div class="w-1.5 h-1.5 rounded-full bg-primary/20"></div>
@@ -444,7 +458,7 @@
             </div>
 
             <div class="group p-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 text-center hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl shadow-slate-200/50 dark:shadow-none">
-                <div class="text-4xl lg:text-5xl font-black text-primary mb-2">25+</div>
+                <div class="text-4xl lg:text-5xl font-semibold text-primary mb-2">25+</div>
                 <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Pro Coaches</p>
                 <div class="mt-4 flex justify-center gap-1">
                     <div class="w-1.5 h-1.5 rounded-full bg-primary/40"></div>
@@ -454,7 +468,7 @@
             </div>
 
             <div class="group p-8 bg-white dark:bg-slate-900 rounded-[2.5rem] border border-slate-200 dark:border-slate-800 text-center hover:border-primary transition-all duration-500 hover:-translate-y-2 shadow-xl shadow-slate-200/50 dark:shadow-none">
-                <div class="text-4xl lg:text-5xl font-black text-primary mb-2">TOP 1</div>
+                <div class="text-4xl lg:text-5xl font-semibold text-primary mb-2">TOP 1</div>
                 <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Regional Ranking</p>
                 <div class="mt-4 flex justify-center gap-1">
                     <div class="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
@@ -534,7 +548,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center mb-20">
-            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">
+            <h2 class="text-4xl md:text-5xl font-semibold text-slate-900 dark:text-white uppercase tracking-tighter">
                 Elite <span class="text-primary ">Mentors</span>
             </h2>
             <p class="mt-4 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs">
@@ -661,7 +675,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter leading-none mb-6">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 dark:text-white uppercase tracking-tighter leading-none mb-6">
                 More Than a Gaming Lounge — <br>
                 <span class="text-primary text-glow text-primary">It’s a Community.</span>
             </h2>
@@ -756,7 +770,7 @@
             <span class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">Mission Status: Evolution</span>
         </div>
 
-        <h2 class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-[0.85] mb-8">
+        <h2 class="text-5xl md:text-7xl lg:text-8xl font-semibold text-white uppercase tracking-tighter leading-[0.85] mb-8">
             Join the Next <br>
             Generation of <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-violet-400 to-primary bg-[length:200%_auto] animate-gradient text-glow">Gamers</span>
         </h2>

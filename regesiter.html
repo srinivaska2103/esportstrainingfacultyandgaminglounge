@@ -34,29 +34,32 @@
     <header class="p-6 flex justify-between items-center w-full max-w-7xl mx-auto">
         <a href="index.html" class="flex items-center gap-3 group">
             <div class="bg-primary p-2 rounded-lg shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform">
-                <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-6 w-6">
+            <img src="https://placehold.co/40x40/8b5cf6/ffffff?text=N" alt="Nexus Logo" class="h-8 w-auto lg:h-10 rounded-lg shadow-lg shadow-primary/20">
             </div>
-            <span class="text-xl font-black italic tracking-tighter text-primary">NEXUS</span>
+            <span class="text-xl lg:text-2xl font-semibold  tracking-tighter text-primary">NEXUS</span>
         </a>
 
-        <div class="flex items-center gap-3">
-            <button @click="toggleDir()" 
-                    class="text-[10px] font-black px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-all uppercase"
-                    x-text="dir === 'ltr' ? 'LTR' : 'RTL'">
-            </button>
-            <button @click="toggleDark()" 
-                    class="p-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg hover:shadow-md transition-all">
-                <i x-show="!darkMode" class="fa-solid fa-moon text-slate-600"></i>
-                <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
-            </button>
-        </div>
+                  <div class="flex items-center gap-2">
+    <button @click="toggleDark()" 
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 group shadow-sm">
+        <i x-show="!darkMode" class="fa-solid fa-moon text-slate-500 group-hover:text-primary"></i>
+        <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+    </button>
+
+    <button @click="toggleDir()" 
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 shadow-sm"
+            style="font-style: normal !important;">
+        <span class="text-[10px] font-black uppercase tracking-tighter text-slate-500 dark:text-slate-400" 
+              x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></span>
+    </button>
+</div>
     </header>
 
     <main class="flex-grow flex items-center justify-center px-4 py-8">
         <div class="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-2xl shadow-slate-200/50 dark:shadow-black/50">
             
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-black uppercase italic tracking-tight">Create <span class="text-primary">Account</span></h1>
+                <h1 class="text-3xl font-semibold uppercase italic tracking-tight">Create <span class="text-primary">Account</span></h1>
                 <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Join the elite community and start your pro journey.</p>
             </div>
 
