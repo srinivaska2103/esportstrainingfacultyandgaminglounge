@@ -36,7 +36,7 @@
       x-data="appState()" 
       x-init="initTheme(); initDir();">
 
-        <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <nav class="fixed w-full z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-20 items-center">
         <a href="index.html">
@@ -111,32 +111,41 @@
     </div>
 </div>
 
-        <div class="hidden lg:flex items-center space-x-3 xl:space-x-4 border-l border-slate-200 dark:border-slate-700 pl-4 xl:pl-6">
-            <div class="flex items-center gap-2">
-    <button @click="toggleDark()" 
-            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 group shadow-sm">
-        <i x-show="!darkMode" class="fa-solid fa-moon text-slate-500 group-hover:text-primary"></i>
-        <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
-    </button>
+       <!-- Main Container: Added 'gap-4' and ensured all items are direct children for consistent spacing -->
+<div class="hidden lg:flex items-center gap-4 border-l border-slate-200 dark:border-slate-700 pl-4 xl:pl-6">
+    
+    <!-- Toggles Group -->
+    <div class="flex items-center gap-2">
+        <button @click="toggleDark()" 
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 group shadow-sm">
+            <i x-show="!darkMode" class="fa-solid fa-moon text-slate-500 group-hover:text-primary"></i>
+            <i x-show="darkMode" class="fa-solid fa-sun text-yellow-400"></i>
+        </button>
 
-    <button @click="toggleDir()" 
-            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 shadow-sm"
-            style="font-style: normal !important;">
-        <span class="text-[10px] font-black uppercase tracking-tighter text-slate-500 dark:text-slate-400" 
-              x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></span>
-    </button>
+        <button @click="toggleDir()" 
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-primary transition-all active:scale-95 shadow-sm">
+            <span class="text-[10px] font-black uppercase tracking-tighter text-slate-500 dark:text-slate-400" 
+                  x-text="dir === 'ltr' ? 'LTR' : 'RTL'"></span>
+        </button>
+    </div>
+
+    <!-- Auth Actions: Added 'ml-2' to explicitly push away from the RTL button -->
+    <div class="flex items-center gap-3 ml-2">
+        <a href="login.html" class="text-primary hover:text-white hover:bg-primary border border-primary px-4 py-1.5 rounded-full text-sm font-bold transition-all transform hover:scale-105">
+            Login
+        </a>
+        <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105">
+            Book Now
+        </a>
+    </div>
 </div>
 
 <style>
-    /* Global Brand Enforcer: No Italics */
+    /* Prevent italics globally for brand consistency */
     button, span, i {
         font-style: normal !important;
     }
 </style>
-            
-            <a href="login.html" class="text-primary hover:text-white hover:bg-primary border border-primary px-4 py-1.5 rounded-full text-sm font-bold transition-all transform hover:scale-105">Login</a>
-            <a href="booknow.html" class="bg-primary hover:bg-violet-600 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-primary/20 transform hover:scale-105">Book Now</a>
-        </div>
 
         <div class="lg:hidden flex items-center gap-4">
             <button @click="mobileMenu = !mobileMenu" class="text-2xl focus:outline-none p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
